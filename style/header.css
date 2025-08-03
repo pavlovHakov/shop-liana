@@ -1,14 +1,15 @@
-
-
 .header {
    width: 100%;
+   background-color: #4c87af;
+   color: white;
+   text-align: center;
+}
+
+.header-top {
    display: flex;
    justify-content: space-between;
    align-items: center;
-   background-color: #4c87af;
-   color: white;
    padding: 10px 26px 10px 96px;
-   text-align: center;
 }
 
 .logo {
@@ -35,7 +36,7 @@
 }
 
 
-.nav a{
+.nav a {
    display: block;
    color: white;
    text-align: center;
@@ -53,6 +54,7 @@ a.active {
    background-color: #ddd;
    color: #04988e;
 }
+
 .block-icon {
    display: flex;
    align-items: center;
@@ -62,11 +64,118 @@ a.active {
    gap: 30px;
 }
 
-.basket,.user,.favorites {
+.basket,
+.user,
+.favorites {
    display: inline-block;
    cursor: pointer;
 }
-.basket img, .user img, .favorites img {
+
+.basket a,
+.user a,
+.favorites a {
+   display: block;
+   text-decoration: none;
+}
+
+
+.basket img,
+.user img,
+.favorites img {
    width: 25px;
    height: auto;
+}
+
+.favorites {
+   position: relative;
+}
+
+.favorites-count {
+   position: absolute;
+   top: -11px;
+   right: -11px;
+   background-color: #ff4757;
+   color: white;
+   border-radius: 50%;
+   width: 18px;
+   height: 18px;
+   font-size: 13px;
+   font-weight: bold;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   line-height: 1;
+}
+
+/* Навигационное меню категорий */
+.nav-menu {
+   background-color: #3a6b8a;
+   border-top: 1px solid #2d5a7a;
+   border-bottom: 1px solid #2d5a7a;
+}
+.active {
+   background-color: #2d5a7a;
+   color: #06ada8;
+   border-bottom-color: #06ada8;
+   font-weight: 600;
+}
+.nav-container {
+   max-width: 1200px;
+   margin: 0 auto;
+   padding: 0 20px;
+}
+
+.nav-list {
+   display: flex;
+   list-style: none;
+   margin: 0;
+   padding: 0;
+   justify-content: center;
+   align-items: center;
+}
+
+.nav-item {
+   position: relative;
+}
+
+.nav-link {
+   display: block;
+   color: white;
+   text-decoration: none;
+   padding: 15px 20px;
+   font-size: 16px;
+   font-weight: 500;
+   transition: all 0.3s ease;
+   border-bottom: 3px solid transparent;
+}
+
+.nav-link:hover {
+   background-color: #2d5a7a;
+   color: #fff;
+   border-bottom-color: #06ada8;
+}
+
+.nav-item.active .nav-link {
+   background-color: #2d5a7a;
+   color: #06ada8;
+   border-bottom-color: #06ada8;
+   font-weight: 600;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+   .nav-list {
+      flex-direction: column;
+      align-items: stretch;
+   }
+
+   .nav-link {
+      padding: 12px 15px;
+      text-align: center;
+      border-bottom: 1px solid #2d5a7a;
+   }
+
+   .nav-item.active .nav-link {
+      border-bottom-color: #06ada8;
+   }
 }

@@ -119,7 +119,12 @@ if ($result->num_rows > 0) {
                <div class="buy_click"><a href="#!">Купить в 1 клик</a></div>
                <div class="add-to-basket">
                   <button class="item-btn btn-buy">Добавить в корзину</button>
-                  <button class="item-btn btn-favorites">Избранное</button>
+                  <button class="item-btn btn-favorites" data-product-id="<?= $product['id'] ?>">
+                     <svg class="favorite-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 437.775 437.774">
+                        <path class="favorite-path" d="M316.722 29.761c66.852 0 121.053 54.202 121.053 121.041 0 110.478-218.893 257.212-218.893 257.212S0 266.569 0 150.801c0-83.217 54.202-121.04 121.041-121.04 40.262 0 75.827 19.745 97.841 49.976 22.017-30.231 57.588-49.976 97.84-49.976z" style="fill: rgb(6, 173, 168)" />
+                     </svg>
+                     Избранное
+                  </button>
                </div>
                <p><?= htmlspecialchars($product['description']) ?></p>
             </div>
@@ -166,9 +171,109 @@ if ($result->num_rows > 0) {
 
       });
    </script>
+   <script src="js/header-favorites.js"></script>
    <script src="js/buy-click.js"></script>
    <script src="js/toogle-filter.js"></script>
    <script src="js/btn-scroll.js"></script>
+   <script src="js/icon-favorite.js"></script>
+   <script>
+      // Специальный обработчик для кнопки избранного на странице товара
+      document.addEventListener('DOMContentLoaded', function() {
+         const favoriteBtn = document.querySelector('.btn-favorites');
+         if (favoriteBtn) {
+            const productId = favoriteBtn.getAttribute('data-product-id');
+            const path = favoriteBtn.querySelector('.favorite-path');
+
+            // Проверяем текущее состояние
+            fetch(`/api/favorites.php?action=check&productId=${productId}`)
+               .then(response => response.json())
+               .then(data => {
+                  if (data.isFavorite) {
+                     path.style.fill = "rgb(228, 8, 8)";
+                     favoriteBtn.textContent = "В избранном";
+                  } else {
+                     path.style.fill = "rgb(6, 173, 168)";
+                     favoriteBtn.textContent = "Добавить в избранное";
+                  }
+               })
+               .catch(error => {
+                  console.error('Ошибка при проверке избранного:', error);
+               });
+
+            // Обработчик клика
+            favoriteBtn.addEventListener('click', function(e) {
+               e.preventDefault();
+
+               const isFavorite = path.style.fill === "rgb(228, 8, 8)";
+               const action = isFavorite ? 'remove' : 'add';
+
+               fetch('/api/favorites.php', {
+                     method: 'POST',
+                     headers: {
+                        'Content-Type': 'application/json',
+                     },
+                     body: JSON.stringify({
+                        action: action,
+                        productId: productId
+                     })
+                  })
+                  .then(response => response.json())
+                  .then(data => {
+                     if (data.success) {
+                                                 if (action === 'add') {
+                            path.style.fill = "rgb(228, 8, 8)";
+                            favoriteBtn.textContent = "В избранном";
+                            showNotification(data.message);
+                         } else {
+                            path.style.fill = "rgb(6, 173, 168)";
+                            favoriteBtn.textContent = "Добавить в избранное";
+                            showNotification(data.message);
+                         }
+                         
+                         // Обновляем счетчик в header
+                         if (typeof updateFavoritesCount === 'function') {
+                            updateFavoritesCount();
+                         }
+                     } else {
+                        showNotification(data.message, 'error');
+                     }
+                  })
+                  .catch(error => {
+                     console.error('Ошибка:', error);
+                     showNotification('Произошла ошибка при работе с избранным', 'error');
+                  });
+            });
+         }
+      });
+
+      // Функция для показа уведомлений
+      function showNotification(message, type = 'success') {
+         const notification = document.createElement('div');
+         notification.className = `notification ${type}`;
+         notification.textContent = message;
+         notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            ${type === 'success' ? 'background-color: #4CAF50;' : 'background-color: #f44336;'}
+         `;
+
+         document.body.appendChild(notification);
+
+         setTimeout(() => {
+            notification.style.opacity = '0';
+            setTimeout(() => {
+               document.body.removeChild(notification);
+            }, 300);
+         }, 3000);
+      }
+   </script>
 </body>
 
 </html>

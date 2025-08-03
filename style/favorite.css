@@ -1,31 +1,31 @@
 .wrapper-favorite {
-   max-width: 1920px;
    min-height: 100vh;
-   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-   padding: 40px 20px;
+   background: #f5f6fa;
+   padding: 20px 0;
 }
 
 .container {
-   max-width: 1200px;
+   max-width: 1920px;
    margin: 0 auto;
+   padding: 0;
 }
 
 .favorite-title {
-   font-size: 2.5rem;
-   font-weight: bold;
    text-align: center;
+   color: white;
+   font-size: 2.5rem;
    margin-bottom: 40px;
-   color: #333;
-   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+   font-weight: 300;
+   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .empty-favorites {
    text-align: center;
-   padding: 60px 20px;
    background: white;
    border-radius: 15px;
-   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-   margin: 40px 0;
+   padding: 60px 40px;
+   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+   margin-top: 50px;
 }
 
 .empty-favorites p {
@@ -34,176 +34,86 @@
    margin-bottom: 30px;
 }
 
-.btn-back-to-catalog {
-   display: inline-block;
-   padding: 15px 30px;
-   background: linear-gradient(45deg, #06ada8, #08c9c3);
-   color: white;
-   text-decoration: none;
-   border-radius: 25px;
-   font-weight: bold;
-   transition: all 0.3s ease;
-   box-shadow: 0 5px 15px rgba(6, 173, 168, 0.3);
-}
 
-.btn-back-to-catalog:hover {
-   transform: translateY(-2px);
-   box-shadow: 0 8px 25px rgba(6, 173, 168, 0.4);
-}
-
-/* Стили для списка товаров */
-.product-list {
+.favorites-grid {
    display: grid;
-   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-   gap: 30px;
-   list-style: none;
-   padding: 0;
-   margin: 0;
+   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+   gap: 1px;
+   margin-top: 1px;
 }
 
-.product-item {
-   background: white;
-   border-radius: 15px;
-   overflow: hidden;
-   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+.favorite-item {
+   background: transparent;
    transition: all 0.3s ease;
    position: relative;
 }
 
-.product-item:hover {
-   transform: translateY(-5px);
-   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+.favorite-item-image {
+   width: 100%;
+   aspect-ratio: 7 / 9;
+   background: #eff1f1;
+
 }
 
-.product-item a {
-   text-decoration: none;
-   color: inherit;
-   display: block;
-}
-
-/* Стили для иконки избранного */
-.block-card-icon {
-   position: absolute;
-   top: 15px;
-   right: 15px;
-   z-index: 10;
-   cursor: pointer;
-   transition: transform 0.3s ease;
-}
-
-.block-card-icon:hover {
-   transform: scale(1.1);
-}
-
-/* Стили для изображения товара */
-.block-img {
-   position: relative;
-   height: 250px;
-   overflow: hidden;
-}
-
-.block-img img {
+.favorite-item-image img {
    width: 100%;
    height: 100%;
    object-fit: cover;
-   transition: transform 0.3s ease;
 }
 
-.product-item:hover .block-img img {
-   transform: scale(1.05);
+.favorite-item-info {
+   width: 100%;
+   background-color: transparent;
+   padding: 5px;
+   color: #fff;
+   text-align: center;
 }
 
-/* Стили для информации о товаре */
-.product-name {
-   font-size: 1.1rem;
-   font-weight: bold;
-   margin: 15px 20px 10px;
-   color: #333;
-   line-height: 1.3;
+.favorite-item-name {
+   font-size: 16px;
+   line-height: 21px;
+   color: #121313;
+   margin-bottom: 6px;
 }
 
-.product-price {
-   font-size: 1.2rem;
-   font-weight: bold;
-   color: #06ada8;
-   margin: 0 20px 20px;
+.favorite-item-price {
+   color: #f53f4a;
+   font-weight: 400;
+   margin-bottom: 14px;
+   font-size: 16px;
+   line-height: 16px;
 }
 
-/* Стили для кнопок размеров */
-.block-size {
+.favorite-item-actions {
    display: flex;
-   flex-wrap: wrap;
-   gap: 8px;
-   margin: 15px 20px;
+   flex-direction: column;
+   gap: 10px;
 }
 
-.size-item {
-   padding: 8px 12px;
-   border: 2px solid #e0e0e0;
-   background: white;
-   border-radius: 20px;
-   font-size: 0.9rem;
-   cursor: pointer;
-   transition: all 0.3s ease;
-}
-
-.size-item:hover {
-   border-color: #06ada8;
+.btn-view-product,
+.btn-remove-favorite {
    background: #06ada8;
    color: white;
-}
-
-/* Стили для кнопки добавления в корзину */
-.btn-add-to-cart {
-   width: calc(100% - 40px);
-   margin: 0 20px 20px;
-   padding: 12px;
-   background: linear-gradient(45deg, #06ada8, #08c9c3);
-   color: white;
-   border: none;
-   border-radius: 25px;
-   font-weight: bold;
-   cursor: pointer;
+   padding: 12px 20px;
+   text-decoration: none;
+   text-align: center;
+   font-weight: 400;
    transition: all 0.3s ease;
+   border: none;
+   font-size: 16px;
+   line-height: 16px;
+   cursor: pointer;
+   margin-bottom: 0px;
 }
 
-.btn-add-to-cart:hover {
-   transform: translateY(-2px);
-   box-shadow: 0 5px 15px rgba(6, 173, 168, 0.3);
-}
-
-/* Стили для уведомлений */
-.notification {
-   position: fixed;
-   top: 20px;
-   right: 20px;
-   padding: 15px 20px;
-   border-radius: 8px;
-   color: white;
-   font-weight: bold;
-   z-index: 10000;
-   opacity: 0;
-   transition: opacity 0.3s ease;
-   max-width: 300px;
-   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.notification-success {
-   background: #4CAF50;
-}
-
-.notification-error {
-   background: #f44336;
-}
-
-.notification-info {
-   background: #2196F3;
+.btn-remove-favorite {
+   background: #ff4757;
 }
 
 /* Адаптивность */
 @media (max-width: 768px) {
-   .wrapper-favorite {
-      padding: 20px 10px;
+   .container {
+      padding: 0 15px;
    }
 
    .favorite-title {
@@ -211,22 +121,34 @@
       margin-bottom: 30px;
    }
 
-   .product-list {
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+   .favorites-grid {
+      grid-template-columns: 1fr;
       gap: 20px;
    }
 
-   .empty-favorites {
-      padding: 40px 15px;
+   .favorite-item-info {
+      padding: 20px;
+   }
+
+   .favorite-item-name {
+      font-size: 1.1rem;
+   }
+
+   .favorite-item-price {
+      font-size: 1.3rem;
    }
 }
 
 @media (max-width: 480px) {
-   .product-list {
-      grid-template-columns: 1fr;
-   }
-
    .favorite-title {
       font-size: 1.8rem;
+   }
+
+   .empty-favorites {
+      padding: 40px 20px;
+   }
+
+   .empty-favorites p {
+      font-size: 1rem;
    }
 }

@@ -18,7 +18,7 @@
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="style/reset.css">
-    <link rel="stylesheet" href="style/fonts/robotocondensed.css">
+   <link rel="stylesheet" href="style/fonts/robotocondensed.css">
    <link rel="stylesheet" href="style/product.css">
    <link rel="stylesheet" href="style/header.css">
    <link rel="stylesheet" href="style/filter.css">
@@ -50,9 +50,11 @@
    <button id="btn-scroll">Вверх</button>
 
    </div>
+   <script src="js/header-favorites.js"></script>
    <script src="js/icon-favorite.js"></script>
    <script src="js/toogle-filter.js"></script>
    <script src="js/btn-scroll.js"></script>
+   <script src="js/size-handler.js"></script>
  </body>
 
  </html>

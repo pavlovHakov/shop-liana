@@ -26,7 +26,6 @@ function getProducts($mysqli)
    return $products;
 }
 
-
 function getGallery($mysqli)
 {
    $result = $mysqli->query("SELECT * FROM id_1");
@@ -43,65 +42,69 @@ function getGallery($mysqli)
 function addToFavorites($mysqli, $productId, $sessionId)
 {
    // Проверяем, не добавлен ли уже товар в избранное
-   $checkQuery = "SELECT id FROM favorites WHERE productId = ? AND sessionId = ?";
-   $checkStmt = $mysqli->prepare($checkQuery);
-   $checkStmt->bind_param("is", $productId, $sessionId);
-   $checkStmt->execute();
-   $result = $checkStmt->get_result();
+   $stmt = $mysqli->prepare("SELECT id FROM favorites WHERE productId = ? AND sessionId = ?");
+   $stmt->bind_param("is", $productId, $sessionId);
+   $stmt->execute();
+   $result = $stmt->get_result();
 
    if ($result->num_rows > 0) {
-      return false; // Товар уже в избранном
+      return ['success' => false, 'message' => 'Товар уже в избранном'];
    }
 
    // Добавляем товар в избранное
-   $query = "INSERT INTO favorites (productId, sessionId) VALUES (?, ?)";
-   $stmt = $mysqli->prepare($query);
+   $stmt = $mysqli->prepare("INSERT INTO favorites (productId, sessionId) VALUES (?, ?)");
    $stmt->bind_param("is", $productId, $sessionId);
 
-   return $stmt->execute();
+   if ($stmt->execute()) {
+      return ['success' => true, 'message' => 'Товар добавлен в избранное'];
+   } else {
+      return ['success' => false, 'message' => 'Ошибка при добавлении товара'];
+   }
 }
 
 // Функция для удаления товара из избранного
 function removeFromFavorites($mysqli, $productId, $sessionId)
 {
-   $query = "DELETE FROM favorites WHERE productId = ? AND sessionId = ?";
-   $stmt = $mysqli->prepare($query);
+   $stmt = $mysqli->prepare("DELETE FROM favorites WHERE productId = ? AND sessionId = ?");
    $stmt->bind_param("is", $productId, $sessionId);
 
-   return $stmt->execute();
-}
-
-// Функция для проверки, находится ли товар в избранном
-function isInFavorites($mysqli, $productId, $sessionId)
-{
-   $query = "SELECT id FROM favorites WHERE productId = ? AND sessionId = ?";
-   $stmt = $mysqli->prepare($query);
-   $stmt->bind_param("is", $productId, $sessionId);
-   $stmt->execute();
-   $result = $stmt->get_result();
-
-   return $result->num_rows > 0;
+   if ($stmt->execute()) {
+      return ['success' => true, 'message' => 'Товар удален из избранного'];
+   } else {
+      return ['success' => false, 'message' => 'Ошибка при удалении товара'];
+   }
 }
 
 // Функция для получения избранных товаров
-function getFavoriteProducts($mysqli, $sessionId)
+function getFavorites($mysqli, $sessionId)
 {
-   $query = "SELECT p.* FROM product p 
-             INNER JOIN favorites f ON p.id = f.productId 
-             WHERE f.sessionId = ?";
-   $stmt = $mysqli->prepare($query);
+   $stmt = $mysqli->prepare("
+      SELECT p.*, f.id as favorite_id 
+      FROM favorites f 
+      JOIN product p ON f.productId = p.id 
+      WHERE f.sessionId = ?
+   ");
    $stmt->bind_param("s", $sessionId);
    $stmt->execute();
    $result = $stmt->get_result();
 
    $favorites = [];
-   if ($result->num_rows > 0) {
-      while ($row = $result->fetch_assoc()) {
-         $favorites[] = $row;
-      }
+   while ($row = $result->fetch_assoc()) {
+      $favorites[] = $row;
    }
 
    return $favorites;
+}
+
+// Функция для проверки, находится ли товар в избранном
+function isInFavorites($mysqli, $productId, $sessionId)
+{
+   $stmt = $mysqli->prepare("SELECT id FROM favorites WHERE productId = ? AND sessionId = ?");
+   $stmt->bind_param("is", $productId, $sessionId);
+   $stmt->execute();
+   $result = $stmt->get_result();
+
+   return $result->num_rows > 0;
 }
 
 $current_page = $_SERVER['REQUEST_URI'];

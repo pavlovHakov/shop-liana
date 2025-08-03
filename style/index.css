@@ -49,6 +49,15 @@ body {
    position: relative;
 }
 
+.container-card:hover .card-block-info {
+   display: block;
+}
+
+.container-card:hover .block-img {
+   transform: scale(1.05);
+   transition: all 0.3s ease;
+}  
+
 .block-img {
    width: 100%;
    aspect-ratio: 7 / 9;
@@ -70,6 +79,7 @@ body {
    padding: 5px;
    color: #fff;
    border-radius: 1px;
+   display: none;
 }
 
 .block-size {
@@ -98,6 +108,15 @@ body {
    color: #fff;
 }
 
+.size-item.active {
+   background-color: #05a09c;
+   color: #fff;
+   border-color: #05a09c;
+   transform: scale(1.05);
+   box-shadow: 0 2px 8px rgba(5, 160, 156, 0.3);
+   transition: all 0.2s ease;
+}
+
 .btn-add-to-cart {
    width: 90%;
    background-color: #06ada8;
@@ -107,9 +126,21 @@ body {
    border-radius: 3px;
    cursor: pointer;
    font-size: 14px;
+   transition: all 0.3s ease;
 }
 
-.container-img:hover .card-block-info {
+.btn-add-to-cart:hover {
+   background-color: #059a95;
+   transform: translateY(-1px);
+   box-shadow: 0 4px 8px rgba(6, 173, 168, 0.3);
+}
+
+.btn-add-to-cart:active {
+   transform: translateY(0);
+   box-shadow: 0 2px 4px rgba(6, 173, 168, 0.3);
+}
+
+.block-img:hover .card-block-info {
    display: block;
 }
 
