@@ -1,0 +1,72 @@
+.wrapper-modal-size {
+   width: 100%;
+   height: auto;
+   min-height: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: start;
+   position: fixed;
+   top: 0px;
+   left: 0px;
+   right: 0px;
+   bottom: 0px;
+   padding: 10px;
+   background-color: rgba(0, 0, 0, 0.5);
+   z-index: 1000;
+   overflow-y: auto;
+  scrollbar-width: none;
+   
+}
+
+.wrapper-modal-size::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+
+
+.modal-size-table {
+   width: 80%;
+   max-width: 900px;
+   height: auto;
+   background-color: #f2f3f4;
+   padding: 46px 46px 0 46px;
+   text-align: center;
+   position: relative;
+}
+
+.modal-size h3 {
+   font-size: 35px;
+   font-weight: 500;
+   line-height: 42.36px;
+   text-align: center;
+   color: #121313;
+}
+
+.close-modal-size {
+   width: 40px;
+   height: 40px;
+   position: absolute;
+   top: 11px;
+   right: 11px;
+   background: none;
+   cursor: pointer;
+}
+
+.modal-size-table table {
+   width: 100%;
+   border-collapse: collapse;
+   margin-bottom: 35px;
+}
+
+.modal-size-table table th,
+.modal-size-table table td {
+   border: 1px solid #ddd;
+   padding: 12px 0;
+}
+
+.modal-size-table table th {
+   background-color: #f2f2f2;
+}
+tr:nth-child(even) {
+  background-color: #fff;
+}

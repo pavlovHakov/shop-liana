@@ -1,0 +1,142 @@
+.wrapper-modal-buy-one-click {
+   width: 100%;
+   height: 100vh;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   position: fixed;
+   top: 0px;
+   left: 0px;
+   right: 0px;
+   bottom: 0px;
+   background-color: rgba(0, 0, 0, 0.5);
+   z-index: 1000;
+
+}
+
+.modal-buy-one-click {
+   width: 50%;
+   min-width: 827px;
+   height: auto;
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   align-items: center;
+   gap: 17px;
+   background-color: #f2f3f4;
+   padding: 27px 20px 11px;
+   text-align: center;
+   position: relative;
+}
+
+.modal-buy-one-click .modal-buy-description {
+   font-size: 16px;
+   line-height: 21px;
+   color: #121313;
+   margin-bottom: 15px;
+}
+
+.block-modal-buy-info {
+   width: 23%;
+   height: auto;
+   display: flex;
+}
+
+.block-image-buy-info {
+   width: 100%;
+   height: auto;
+}
+.block-image-buy-info .product-name {
+   font-size: 16px;
+   line-height: 21px;
+   color: #121313;
+   margin-bottom: 6px;
+}
+
+.block-modal-buy-form {
+   width: 70%;
+   height: auto;
+   display: flex;
+   margin-top: -49px;
+   align-items: center;
+   justify-content: center;
+   flex-direction: column;
+}
+
+.modal-buy-form-title {
+   font-size: 24px;
+   font-weight: 600;
+   line-height: 30px;
+   color: #121313;
+   margin-bottom: 20px;
+}
+.modal-buy-form-subtitle {
+   font-size: 16px;
+   line-height: 21px;
+   color: #059a9b;
+   margin-bottom: 20px;
+}
+.close-modal-buy-one-click {
+   width: 40px;
+   height: 40px;
+   position: absolute;
+   top: 11px;
+   right: 11px;
+   background: none;
+   cursor: pointer;
+}
+
+.modal-buy-one-click .modal-buy-form-title {
+   font-size: 22px;
+   font-weight: 600;
+   line-height: 0px;
+   color: #121313;
+   margin-bottom: 35px;
+}
+
+.modal-name-input,
+.modal-phone-input {
+   width: 100%;
+   height: 40px;
+   font-size: 16px;
+   padding: 10px;
+   border: 1px solid #ddd;
+   border-radius: 5px;
+   margin-bottom: 20px;
+}
+.modal-name-input::placeholder,
+.modal-phone-input::placeholder {
+   color: #a1a1a1;
+}
+
+.modal-name-input:focus,
+.modal-phone-input:focus {
+   border-color: #3e3e3e;
+   outline: none;
+}
+
+.modal-buy-one-click .btn-buy {
+   width: 100%;
+   padding: 15px;
+   background-color: #06ada8;
+   color: #fff;
+   border: none;
+   border-radius: 5px;
+   font-size: 16px;
+   cursor: pointer;
+}
+
+.modal-buy-one-click .btn-buy:hover {
+   background-color: #059a9b;
+}
+
+.block-modal-buy-product-image {
+   width: 100%;
+   height: auto;
+   object-fit: cover;
+}
+
+.block-modal-buy-product-image img {
+   width: 100%;
+   height: auto;
+}

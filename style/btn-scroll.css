@@ -1,0 +1,17 @@
+#btn-scroll {
+   position: fixed;
+   bottom: 30px;
+   right: 30px;
+   padding: 11px;
+   background-color: #007bff;
+   color: white;
+   border: none;
+   border-radius: 5px;
+   transform: scale(0);
+   transition: 0.34s linear;
+   z-index: 10;
+}
+
+#btn-scroll.fixed {
+   transform: scale(1);
+}

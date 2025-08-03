@@ -1,0 +1,75 @@
+.filter-btn {
+   width: 50px;
+   height: auto;
+   position: fixed;
+   top: 72px;
+   left: 20px;
+   z-index: 10;
+}
+
+
+.filter-btn img {
+   width: 100%;
+   height: auto;
+   object-fit: cover;
+   cursor: pointer;
+}
+
+.form-block {
+   position: fixed;
+   top: 134px;
+   left: -400px;
+   width: 320px;
+   height: auto;
+   background-color: rgba(255, 255, 255, 1);
+   padding: 20px;
+   z-index: 100;
+}
+
+.form-block.active-filter {
+   animation-name: show-form-block;
+   animation-duration: 0.3s;
+   animation-fill-mode: forwards;
+}
+
+@keyframes show-form-block {
+   0% {
+      left: -400px;
+   }
+
+   100% {
+      left: 0;
+   }
+}
+
+.search-input,
+.price-input {
+   width: 100%;
+   padding: 10px;
+   border: 1px solid #ddd;
+   border-radius: 5px;
+   margin-bottom: 20px;
+}
+
+.category-option {
+   width: 100%;
+   padding: 10px;
+   border: 1px solid #ddd;
+   border-radius: 5px;
+   background-color: #fff;
+   margin-bottom: 20px;
+}
+
+.category-button {
+   padding: 10px 20px;
+   border: none;
+   border-radius: 5px;
+   background-color: #06ada8;
+   color: #fff;
+   cursor: pointer;
+   transition: background-color 0.3s;
+}
+
+.category-button:hover {
+   background-color: #05a09c;
+}

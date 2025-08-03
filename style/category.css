@@ -1,0 +1,17 @@
+.category-title {
+  font-size: 24px;
+  color: #347424;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.category-title span{
+  color: #8c0703;
+  text-transform: lowercase;
+
+}
+.product-item a .description {
+  font-size: 15px;
+  color: #666;
+  text-align: center;
+  margin-top: 5px;
+}
