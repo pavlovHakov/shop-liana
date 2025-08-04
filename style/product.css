@@ -153,11 +153,18 @@ h1 {
    border: 1px solid #05a09c;
    border-radius: 3px;
    cursor: pointer;
+   transition: all 0.3s ease;
 }
 
 .size-product-item:hover {
    background-color: #05a09c;
    color: #fff;
+}
+
+.size-product-item.active {
+   background-color: #06ada8;
+   color: #fff;
+   border-color: #06ada8;
 }
 
 .size-list {

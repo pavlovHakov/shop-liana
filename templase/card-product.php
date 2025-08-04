@@ -5,20 +5,31 @@
       <?php foreach ($products as $product) : ?>
 
       <li class="product-item">
+         <div class="product-card">
+            <a href="/product.php?id=<?= $product['id'] ?>" class="product-link">
 
-         <a href="/product.php?id=<?= $product['id'] ?>">
-
-            <div class="loadingio-spinner-rolling-nq4q5u6dq7r">
-               <div class="ldio-x2uulkbinbj">
-                  <div></div>
+               <div class="loadingio-spinner-rolling-nq4q5u6dq7r">
+                  <div class="ldio-x2uulkbinbj">
+                     <div></div>
+                  </div>
                </div>
-            </div>
 
+               <div class="container-card">
+                  <?php if ($product['availability'] == 'Нет') : ?>
+                  <div class="container-availability">
+                     <span class="availability"><?= $product['availability'] ?> в наличии</span>
+                  </div>
+                  <?php endif; ?>
+                  <div class="block-img">
+                     <img src="/img/<?= $product['img'] ?>" alt="<?= $product['name'] ?>">
+                  </div>
+               </div>
+
+               <h2 class="product-name"><?= htmlspecialchars($product['name']) ?></h2>
+               <p class="product-price">Цена: <?= $product['price'] ?> ₴</p>
+            </a>
 
             <div class="block-card-icon" data-product-id="<?= $product['id'] ?>">
-
-
-
                <svg id="iconCard" xmlns="http://www.w3.org/2000/svg" version="1.1"
                   xmlns:xlink="http://www.w3.org/1999/xlink" width="50" height="50" x="0" y="0"
                   viewbox="0 0 437.775 437.774" xml:space="preserve">
@@ -30,38 +41,25 @@
                </svg>
             </div>
 
-            <div class="container-card">
-               <?php if ($product['availability'] == 'Нет') : ?>
-               <div class="container-availability">
-                  <span class="availability"><?= $product['availability'] ?> в наличии</span>
-               </div>
-               <?php endif; ?>
-               <div class="block-img">
-                  <img src="/img/<?= $product['img'] ?>" alt="<?= $product['name'] ?>">
-               </div>
-               <div class="card-block-info">
-                  <div class="block-size">
-                     <?php
-                        if (!empty($product['size'])) {
-                           $sizes = explode(',', $product['size']);
-                           foreach ($sizes as $size) {
-                              $size = trim($size);
-                              if (!empty($size)) {
-                                 echo '<button class="size-item">' . htmlspecialchars($size) . '</button>';
-                              }
+            <div class="card-block-info">
+               <div class="block-size">
+                  <?php
+                     if (!empty($product['size'])) {
+                        $sizes = explode(',', $product['size']);
+                        foreach ($sizes as $size) {
+                           $size = trim($size);
+                           if (!empty($size)) {
+                              echo '<button class="size-item">' . htmlspecialchars($size) . '</button>';
                            }
-                        } else {
-                           echo '<span style="color: #fff; font-size: 14px;">Размеры не указаны</span>';
                         }
-                        ?>
-                  </div>
-                  <button class="btn-add-to-cart">Добавить в корзину</button>
+                     } else {
+                        echo '<span style="color: #fff; font-size: 14px;">Размеры не указаны</span>';
+                     }
+                     ?>
                </div>
+               <button class="btn-add-to-basket" data-product-id="<?= $product['id'] ?>" data-quantity="1">Добавить в корзину</button>
             </div>
-
-            <h2 class="product-name"><?= htmlspecialchars($product['name']) ?></h2>
-            <p class=" product-price">Цена: <?= $product['price'] ?> ₴</p>
-         </a>
+         </div>
       </li>
       <?php endforeach; ?>
    </ul>

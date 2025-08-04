@@ -1,3 +1,343 @@
+.wrapper-basket {
+   min-height: 100vh;
+   background: #f5f6fa;
+   padding: 20px 0;
+}
+
+.container {
+   max-width: 1920px;
+   margin: 0 auto;
+   padding: 0 20px;
+}
+
+.basket-title {
+   text-align: center;
+   color: white;
+   font-size: 2.5rem;
+   margin-bottom: 40px;
+   font-weight: 300;
+   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.empty-basket {
+   text-align: center;
+   background: white;
+   border-radius: 15px;
+   padding: 60px 40px;
+   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+   margin-top: 50px;
+}
+
+.empty-basket p {
+   font-size: 1.2rem;
+   color: #666;
+   margin-bottom: 30px;
+}
+
+.btn-back-to-shop {
+   background: #06ada8;
+   color: white;
+   padding: 15px 30px;
+   text-decoration: none;
+   border-radius: 8px;
+   font-weight: 500;
+   transition: all 0.3s ease;
+   display: inline-block;
+}
+
+.btn-back-to-shop:hover {
+   background: #058a86;
+   transform: translateY(-2px);
+}
+
+.basket-content {
+   display: grid;
+   grid-template-columns: 2fr 1fr;
+   gap: 30px;
+   margin-top: 20px;
+}
+
+.basket-items {
+   background: white;
+   border-radius: 15px;
+   padding: 30px;
+   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.basket-item {
+   display: grid;
+   grid-template-columns: 120px 1fr auto;
+   gap: 20px;
+   padding: 20px 0;
+   border-bottom: 1px solid #eee;
+   align-items: center;
+}
+
+.basket-item:last-child {
+   border-bottom: none;
+}
+
+.basket-item-image {
+   width: 120px;
+   height: 150px;
+   background: #f8f9fa;
+   border-radius: 8px;
+   overflow: hidden;
+}
+
+.basket-item-image img {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+}
+
+.basket-item-info {
+   display: flex;
+   flex-direction: column;
+   gap: 8px;
+}
+
+.basket-item-name {
+   font-size: 18px;
+   font-weight: 500;
+   color: #333;
+   margin: 0;
+}
+
+.basket-item-size {
+   font-size: 14px;
+   color: #666;
+   margin: 0;
+}
+
+.basket-item-price {
+   font-size: 16px;
+   color: #f53f4a;
+   font-weight: 600;
+   margin: 0;
+}
+
+.basket-item-controls {
+   display: flex;
+   flex-direction: column;
+   align-items: flex-end;
+   gap: 15px;
+}
+
+.quantity-controls {
+   display: flex;
+   align-items: center;
+   gap: 10px;
+   background: #f8f9fa;
+   border-radius: 8px;
+   padding: 5px;
+}
+
+.quantity-btn {
+   width: 30px;
+   height: 30px;
+   border: none;
+   background: #06ada8;
+   color: white;
+   border-radius: 4px;
+   cursor: pointer;
+   font-size: 16px;
+   font-weight: bold;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   transition: all 0.3s ease;
+}
+
+.quantity-btn:hover {
+   background: #058a86;
+}
+
+.quantity-input {
+   width: 50px;
+   height: 30px;
+   border: 1px solid #ddd;
+   border-radius: 4px;
+   text-align: center;
+   font-size: 14px;
+}
+
+.basket-item-total {
+   font-size: 18px;
+   font-weight: 600;
+   color: #333;
+}
+
+.btn-remove-item {
+   background: none;
+   border: none;
+   color: #f53f4a;
+   cursor: pointer;
+   padding: 5px;
+   border-radius: 4px;
+   transition: all 0.3s ease;
+}
+
+.btn-remove-item:hover {
+   background: #f53f4a;
+   color: white;
+}
+
+.basket-summary {
+   background: white;
+   border-radius: 15px;
+   padding: 30px;
+   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+   height: fit-content;
+   position: sticky;
+   top: 20px;
+}
+
+.summary-content h3 {
+   font-size: 24px;
+   color: #333;
+   margin-bottom: 20px;
+   text-align: center;
+}
+
+.summary-total {
+   text-align: center;
+   margin-bottom: 30px;
+}
+
+.total-amount {
+   font-size: 32px;
+   font-weight: bold;
+   color: #f53f4a;
+}
+
+.summary-actions {
+   display: flex;
+   flex-direction: column;
+   gap: 15px;
+}
+
+.btn-clear-basket {
+   background: #6c757d;
+   color: white;
+   border: none;
+   padding: 12px 20px;
+   border-radius: 8px;
+   font-size: 16px;
+   cursor: pointer;
+   transition: all 0.3s ease;
+}
+
+.btn-clear-basket:hover {
+   background: #5a6268;
+}
+
+.btn-checkout {
+   background: #06ada8;
+   color: white;
+   border: none;
+   padding: 15px 20px;
+   border-radius: 8px;
+   font-size: 18px;
+   font-weight: 600;
+   cursor: pointer;
+   transition: all 0.3s ease;
+}
+
+.btn-checkout:hover {
+   background: #058a86;
+   transform: translateY(-2px);
+}
+
+/* Адаптивность */
+@media (max-width: 1024px) {
+   .basket-content {
+      grid-template-columns: 1fr;
+      gap: 20px;
+   }
+   
+   .basket-summary {
+      position: static;
+   }
+}
+
+@media (max-width: 768px) {
+   .container {
+      padding: 0 15px;
+   }
+
+   .basket-title {
+      font-size: 2rem;
+      margin-bottom: 30px;
+   }
+
+   .basket-item {
+      grid-template-columns: 80px 1fr;
+      gap: 15px;
+   }
+
+   .basket-item-image {
+      width: 80px;
+      height: 100px;
+   }
+
+   .basket-item-controls {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 15px;
+   }
+
+   .basket-items,
+   .basket-summary {
+      padding: 20px;
+   }
+}
+
+@media (max-width: 480px) {
+   .basket-title {
+      font-size: 1.8rem;
+   }
+
+   .empty-basket {
+      padding: 40px 20px;
+   }
+
+   .empty-basket p {
+      font-size: 1rem;
+   }
+
+   .basket-item {
+      grid-template-columns: 1fr;
+      text-align: center;
+   }
+
+   .basket-item-image {
+      width: 100px;
+      height: 125px;
+      margin: 0 auto;
+   }
+
+   .basket-item-controls {
+      justify-content: center;
+      gap: 20px;
+   }
+
+   .quantity-controls {
+      order: 1;
+   }
+
+   .basket-item-total {
+      order: 2;
+   }
+
+   .btn-remove-item {
+      order: 3;
+   }
+}
+
+/* Старые стили модального окна корзины (сохраняем для совместимости) */
 .wrapp-modal-basket {
    display: flex;
    flex-direction: column;
@@ -20,27 +360,16 @@
    max-width: 600px;
    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
+
 .basket-img {
    width: 50%;
    height: auto;
 }
+
 .basket-img img {
    width: 100%;
    height: auto;
    border-radius: 5px;
-}
-.basket-items {
-   margin-top: 20px;
-}
-
-.basket-total {
-   margin-top: 20px;
-}
-
-.total-price {
-   font-size: 20px;
-   font-weight: bold;
-   margin-top: 20px;
 }
 
 .btn-close {

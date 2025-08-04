@@ -50,11 +50,6 @@
 }
 
 
-a.active {
-   background-color: #ddd;
-   color: #04988e;
-}
-
 .block-icon {
    display: flex;
    align-items: center;
@@ -86,11 +81,13 @@ a.active {
    height: auto;
 }
 
-.favorites {
+.favorites,
+.basket {
    position: relative;
 }
 
-.favorites-count {
+.favorites-count,
+.basket-count {
    position: absolute;
    top: -11px;
    right: -11px;
@@ -110,15 +107,8 @@ a.active {
 /* Навигационное меню категорий */
 .nav-menu {
    background-color: #3a6b8a;
-   border-top: 1px solid #2d5a7a;
-   border-bottom: 1px solid #2d5a7a;
 }
-.active {
-   background-color: #2d5a7a;
-   color: #06ada8;
-   border-bottom-color: #06ada8;
-   font-weight: 600;
-}
+
 .nav-container {
    max-width: 1200px;
    margin: 0 auto;
@@ -146,20 +136,24 @@ a.active {
    font-size: 16px;
    font-weight: 500;
    transition: all 0.3s ease;
-   border-bottom: 3px solid transparent;
 }
 
 .nav-link:hover {
    background-color: #2d5a7a;
    color: #fff;
-   border-bottom-color: #06ada8;
 }
 
-.nav-item.active .nav-link {
-   background-color: #2d5a7a;
-   color: #06ada8;
-   border-bottom-color: #06ada8;
+/* Активная кнопка категории */
+.nav-item.active .nav-link,
+.nav-link.active {
+   background-color: #06ada8;
+   color: #fff;
    font-weight: 600;
+}
+
+.nav-item.active .nav-link:hover,
+.nav-link.active:hover {
+   background-color: #04918c;
 }
 
 /* Адаптивность для мобильных устройств */
@@ -172,10 +166,5 @@ a.active {
    .nav-link {
       padding: 12px 15px;
       text-align: center;
-      border-bottom: 1px solid #2d5a7a;
-   }
-
-   .nav-item.active .nav-link {
-      border-bottom-color: #06ada8;
    }
 }

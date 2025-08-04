@@ -69,6 +69,18 @@ if ($method === 'POST') {
          ]);
          break;
 
+      case 'clear_all':
+         // Очищаем все выбранные размеры
+         if (isset($_SESSION['selected_sizes'])) {
+            unset($_SESSION['selected_sizes']);
+         }
+
+         echo json_encode([
+            'success' => true,
+            'message' => 'Все выбранные размеры очищены'
+         ]);
+         break;
+
       default:
          echo json_encode(['success' => false, 'message' => 'Неизвестное действие']);
    }

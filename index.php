@@ -52,6 +52,7 @@
    </div>
    <script src="js/header-favorites.js"></script>
    <script src="js/icon-favorite.js"></script>
+   <script src="js/basket.js"></script>
    <script src="js/toogle-filter.js"></script>
    <script src="js/btn-scroll.js"></script>
    <script src="js/size-handler.js"></script>

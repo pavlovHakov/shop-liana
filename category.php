@@ -6,31 +6,27 @@ require_once 'function/db.php';
 // Выполнение запроса для получения категорий
 $categories = getCategories($mysqli);
 
-// Получаем и валидируем ID категории из URL
-$categoryId = isset($_GET['categoryId']) ? (int)$_GET['categoryId'] : 1;
+// Получаем параметры фильтрации
+$categoryId = isset($_GET['categoryId']) ? (int)$_GET['categoryId'] : 0;
+$name = isset($_GET['name']) ? trim($_GET['name']) : '';
+$priceFrom = isset($_GET['priceFrom']) ? (int)$_GET['priceFrom'] : 0;
+$priceTo = isset($_GET['priceTo']) ? (int)$_GET['priceTo'] : 0;
 
-// Проверяем, существует ли категория
-if (!isset($categories[$categoryId])) {
-   // Если категория не найдена, перенаправляем на главную
-   header('Location: /index.php');
-   exit;
-}
-
-// Выполнение запроса для получения продуктов
-$stmt = $mysqli->prepare("SELECT * FROM product WHERE categoryId = ?");
-$stmt->bind_param("i", $categoryId);
-$stmt->execute();
-$result = $stmt->get_result();
-
-$products = [];
-if ($result->num_rows > 0) {
-   while ($row = $result->fetch_assoc()) {
-      $products[] = $row;
+// Если категория не указана, показываем все товары
+if ($categoryId == 0) {
+   $categoryName = 'Все товары';
+} else {
+   // Проверяем, существует ли категория
+   if (!isset($categories[$categoryId])) {
+      // Если категория не найдена, перенаправляем на главную
+      header('Location: /index.php');
+      exit;
    }
+   $categoryName = $categories[$categoryId]['name'];
 }
 
-// Получаем название категории
-$categoryName = $categories[$categoryId]['name'];
+// Получаем отфильтрованные продукты
+$products = getFilteredProducts($mysqli, $categoryId, $name, $priceFrom, $priceTo);
 ?>
 
 
@@ -62,10 +58,11 @@ $categoryName = $categories[$categoryId]['name'];
       <div class="content">
 
          <?php if (count($products) > 0) : ?>
-
-         <?php require_once 'templase/card-product.php'; ?>
+            <div class="block-info-category">
+               <?php require_once 'templase/card-product.php'; ?>
+            </div>
          <?php else : ?>
-         <p>Продукты не найдены</p>
+            <p>Продукты не найдены</p>
          <?php endif; ?>
       </div>
       <div class="footer"></div>
@@ -77,6 +74,7 @@ $categoryName = $categories[$categoryId]['name'];
    <script src="/js/btn-scroll.js"></script>
    <script src="/js/toogle-filter.js"></script>
    <script src="/js/size-handler.js"></script>
+   <script src="/js/basket.js"></script>
 </body>
 
 </html>

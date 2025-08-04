@@ -41,6 +41,34 @@ document.addEventListener("DOMContentLoaded", function () {
     return null;
   }
 
+  // Функция для сброса всех выбранных размеров
+  async function clearAllSelectedSizes() {
+    try {
+      const response = await fetch("/api/size-selection.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          action: "clear_all"
+        }),
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        console.log("Все размеры сброшены:", result.message);
+        // Убираем активные классы со всех размеров на странице
+        document.querySelectorAll(".size-item.active").forEach(button => {
+          button.classList.remove("active");
+        });
+      } else {
+        console.error("Ошибка сброса размеров:", result.message);
+      }
+    } catch (error) {
+      console.error("Ошибка при сбросе размеров:", error);
+    }
+  }
+
   // Функция для восстановления выбранных размеров при загрузке страницы
   async function restoreSelectedSizes() {
     const productItems = document.querySelectorAll(".product-item");
@@ -107,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Например, отправку AJAX запроса на сервер
         addToCart(productId, size);
       } else {
-        alert("Пожалуйста, выберите размер!");
+        alert("размер не выбран");
       }
     }
   });
@@ -144,6 +172,40 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // Обработчики для сброса размеров при завершении сессии
+  window.addEventListener('beforeunload', function() {
+    // Сбрасываем размеры при закрытии страницы/вкладки
+    clearAllSelectedSizes();
+  });
+
+  window.addEventListener('unload', function() {
+    // Дополнительный сброс при выгрузке страницы
+    clearAllSelectedSizes();
+  });
+
+  // Сброс размеров при неактивности (через 30 минут)
+  let inactivityTimer;
+  const INACTIVITY_TIME = 30 * 60 * 1000; // 30 минут в миллисекундах
+
+  function resetInactivityTimer() {
+    clearTimeout(inactivityTimer);
+    inactivityTimer = setTimeout(() => {
+      console.log("Сброс размеров из-за неактивности");
+      clearAllSelectedSizes();
+    }, INACTIVITY_TIME);
+  }
+
+  // Отслеживаем активность пользователя
+  ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'].forEach(event => {
+    document.addEventListener(event, resetInactivityTimer, true);
+  });
+
+  // Запускаем таймер неактивности
+  resetInactivityTimer();
+
   // Восстанавливаем выбранные размеры при загрузке страницы
   restoreSelectedSizes();
+
+  // Экспортируем функцию для внешнего использования
+  window.clearAllSelectedSizes = clearAllSelectedSizes;
 });

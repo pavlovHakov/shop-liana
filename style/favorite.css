@@ -90,8 +90,7 @@
    gap: 10px;
 }
 
-.btn-view-product,
-.btn-remove-favorite {
+.btn-view-product {
    background: #06ada8;
    color: white;
    padding: 12px 20px;
@@ -107,7 +106,21 @@
 }
 
 .btn-remove-favorite {
-   background: #ff4757;
+   width: 28px;
+   height: auto;
+   color: #f53f4a;
+   cursor: pointer;
+}
+
+.btn-remove-favorite svg {
+   width: 100%;
+   height: auto;
+   object-fit: cover;
+}
+
+.btn-remove-favorite:hover {
+   color: #f53f4a;
+   opacity: 0.8;
 }
 
 /* Адаптивность */
