@@ -27,7 +27,6 @@ function updateFavoritesCount() {
          }
       })
       .catch(error => {
-         console.error('Ошибка при обновлении счетчика избранного:', error);
       });
 }
 

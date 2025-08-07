@@ -1,3 +1,40 @@
+/* Стили для сообщения "Продукты не найдены" */
+.empty-message-category {
+   text-align: center;
+   color: #f53f4a;
+   font-size: 1.3em;
+   font-weight: 500;
+   margin: 40px 0 60px 0;
+   background: #fff6f6;
+   border-radius: 8px;
+   padding: 24px 32px;
+   box-shadow: 0 2px 12px rgba(245, 63, 74, 0.08);
+   letter-spacing: 0.02em;
+}
+
+/* Пагинация */
+.pagination {
+   text-align: center;
+   margin: 32px 0;
+}
+
+.pagination-link {
+   display: inline-block;
+   margin: 0 6px;
+   padding: 8px 16px;
+   border-radius: 4px;
+   background: #f0f0f0;
+   color: #347424;
+   text-decoration: none;
+   font-weight: 600;
+   transition: background 0.2s, color 0.2s;
+}
+
+.pagination-link.active {
+   background: #06ada8;
+   color: #fff;
+}
+
 * {
    margin: 0;
    padding: 0;
@@ -8,6 +45,7 @@ body {
    font-family: 'Arial', sans-serif;
    background-color: #f0f0f0;
    color: #333;
+
 }
 
 .wrapper {
@@ -48,10 +86,6 @@ body {
    width: 100%;
    position: relative;
 }
-
-/* .block-info-category .card-block-info {
-   bottom: 108px;
-} */
 
 .container-card:hover .card-block-info {
    display: block;
@@ -281,4 +315,104 @@ h3 {
    font-size: 16px;
    line-height: 1.5;
 
+}
+
+.viewed-block {
+   width: 100%;
+   margin: 40px auto;
+   background: #fff;
+   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+   padding: 14px 0;
+}
+
+.viewed-slider-container {
+   display: flex;
+   align-items: center;
+   position: relative;
+}
+
+.viewed-slider {
+   display: flex;
+   gap: 16px;
+   overflow-x: auto;
+   scroll-behavior: smooth;
+   padding: 10px 0;
+   width: 100%;
+   scrollbar-width: none;
+   /* Firefox */
+}
+
+.viewed-slider::-webkit-scrollbar {
+   display: none;
+   /* Chrome, Safari */
+}
+
+.viewed-card {
+   min-width: 300px;
+   max-width: 320px;
+   background: #f8f8f8;
+   text-align: center;
+   transition: transform 0.2s;
+}
+
+.viewed-card:hover {
+   transform: translateY(-4px) scale(1.03);
+}
+
+.viewed-img {
+   width: 100%;
+   height: auto;
+   object-fit: cover;
+}
+
+.viewed-name {
+   font-size: 16px;
+   color: #347424;
+   margin-top: 6px;
+   font-weight: 500;
+   letter-spacing: 0.5px;
+}
+
+.viewed-link {
+   text-decoration: none;
+   color: inherit;
+   display: block;
+}
+
+.viewed-slider-arrow {
+   background: #06ada8;
+   color: #fff;
+   border: none;
+   border-radius: 50%;
+   width: 40px;
+   height: 40px;
+   font-size: 24px;
+   cursor: pointer;
+   margin: 0 8px;
+   transition: background 0.2s, box-shadow 0.2s;
+   box-shadow: 0 2px 8px rgba(6, 173, 168, 0.12);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.viewed-slider-arrow:hover {
+   background: #059a95;
+   box-shadow: 0 4px 12px rgba(6, 173, 168, 0.18);
+}
+
+@media (max-width: 700px) {
+   .viewed-card {
+      min-width: 180px;
+      max-width: 200px;
+      padding: 8px;
+   }
+
+   .viewed-img {
+      height: 100px;
+   }
+
+   .viewed-block {
+      padding: 12px 2px;
+   }
 }

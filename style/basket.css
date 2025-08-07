@@ -1,3 +1,119 @@
+/* Блок действий корзины */
+.basket-actions {
+   display: flex;
+   justify-content: flex-end;
+   gap: 16px;
+   margin-top: 24px;
+}
+
+/* Итоговая сумма корзины */
+.basket-total {
+   font-size: 22px;
+   font-weight: 600;
+   color: #347424;
+   text-align: right;
+   margin-top: 32px;
+   margin-bottom: 24px;
+}
+
+/* Кнопки изменения количества и удаления товара */
+.basket-btn {
+   background: #06ada8;
+   color: #fff;
+   border: none;
+   border-radius: 4px;
+   padding: 6px 12px;
+   font-size: 16px;
+   cursor: pointer;
+   transition: background 0.2s;
+}
+
+.basket-btn:hover {
+   background: #347424;
+}
+
+/* Количество товара в корзине */
+.basket-quantity {
+   display: flex;
+   align-items: center;
+   gap: 8px;
+   margin-top: 8px;
+}
+
+/* Цена товара в корзине */
+.basket-price {
+   font-size: 18px;
+   color: #06ada8;
+   font-weight: 500;
+}
+
+/* Размер товара в корзине */
+.basket-size {
+   font-size: 16px;
+   color: #555;
+}
+
+/* Название товара в корзине */
+.basket-name {
+   font-size: 20px;
+   font-weight: 600;
+   color: #222;
+}
+
+/* Информация о товаре в корзине */
+.basket-info {
+   flex: 1;
+   display: flex;
+   flex-direction: column;
+   gap: 8px;
+}
+
+/* Изображение товара в корзине */
+.basket-img {
+   width: 120px;
+   height: 120px;
+   object-fit: cover;
+   border-radius: 8px;
+   margin-right: 32px;
+}
+
+/* Элемент корзины */
+.basket-item {
+   display: flex;
+   align-items: center;
+   border-bottom: 1px solid #eee;
+   padding: 24px 0;
+}
+
+/* Пустая корзина */
+.basket-empty {
+   text-align: center;
+   font-size: 22px;
+   color: #888;
+   margin: 40px 0;
+}
+
+/* Заголовок корзины */
+.basket-title {
+   font-size: 32px;
+   font-weight: 700;
+   margin-bottom: 32px;
+   color: #222;
+   text-align: center;
+}
+
+/* Контейнер корзины */
+.basket-container {
+   max-width: 800px;
+   margin: 40px auto;
+   background: #fff;
+   border-radius: 10px;
+   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+   padding: 32px 24px;
+}
+
+/* Кнопка оформления заказа */
+
 .wrapper-basket {
    min-height: 100vh;
    background: #f5f6fa;
@@ -22,7 +138,6 @@
 .empty-basket {
    text-align: center;
    background: white;
-   border-radius: 15px;
    padding: 60px 40px;
    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
    margin-top: 50px;
@@ -36,10 +151,11 @@
 
 .btn-back-to-shop {
    background: #06ada8;
+   letter-spacing: 0.3px;
    color: white;
    padding: 15px 30px;
    text-decoration: none;
-   border-radius: 8px;
+   border-radius: 3px;
    font-weight: 500;
    transition: all 0.3s ease;
    display: inline-block;
@@ -59,9 +175,8 @@
 
 .basket-items {
    background: white;
-   border-radius: 15px;
    padding: 30px;
-   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .basket-item {
@@ -81,7 +196,6 @@
    width: 120px;
    height: 150px;
    background: #f8f9fa;
-   border-radius: 8px;
    overflow: hidden;
 }
 
@@ -129,7 +243,7 @@
    align-items: center;
    gap: 10px;
    background: #f8f9fa;
-   border-radius: 8px;
+   border-radius: 3px;
    padding: 5px;
 }
 
@@ -139,7 +253,7 @@
    border: none;
    background: #06ada8;
    color: white;
-   border-radius: 4px;
+   border-radius: 3px;
    cursor: pointer;
    font-size: 16px;
    font-weight: bold;
@@ -157,7 +271,7 @@
    width: 50px;
    height: 30px;
    border: 1px solid #ddd;
-   border-radius: 4px;
+   border-radius: 3px;
    text-align: center;
    font-size: 14px;
 }
@@ -174,7 +288,7 @@
    color: #f53f4a;
    cursor: pointer;
    padding: 5px;
-   border-radius: 4px;
+   border-radius: 3px;
    transition: all 0.3s ease;
 }
 
@@ -185,9 +299,8 @@
 
 .basket-summary {
    background: white;
-   border-radius: 15px;
    padding: 30px;
-   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
    height: fit-content;
    position: sticky;
    top: 20px;
@@ -214,6 +327,7 @@
 .summary-actions {
    display: flex;
    flex-direction: column;
+   letter-spacing: 0.3px;
    gap: 15px;
 }
 
@@ -221,8 +335,9 @@
    background: #6c757d;
    color: white;
    border: none;
-   padding: 12px 20px;
-   border-radius: 8px;
+   padding: 10px 20px;
+   letter-spacing: 0.3px;
+   border-radius: 3px;
    font-size: 16px;
    cursor: pointer;
    transition: all 0.3s ease;
@@ -232,14 +347,27 @@
    background: #5a6268;
 }
 
+.btn-place-order {
+   display: block;
+   padding: 10px 20px;
+   border-radius: 3px;
+   font-size: 16px;
+   background: #06ada8;
+   color: #fff;
+   text-decoration: none;
+   font-weight: 600;
+   text-align: center;
+   box-shadow: 0 2px 8px rgba(6, 173, 168, 0.15);
+   transition: background 0.2s;
+}
+
 .btn-checkout {
    background: #06ada8;
    color: white;
    border: none;
-   padding: 15px 20px;
-   border-radius: 8px;
-   font-size: 18px;
-   font-weight: 600;
+   padding: 10px 20px;
+   border-radius: 3px;
+   font-size: 16px;
    cursor: pointer;
    transition: all 0.3s ease;
 }
@@ -255,7 +383,7 @@
       grid-template-columns: 1fr;
       gap: 20px;
    }
-   
+
    .basket-summary {
       position: static;
    }

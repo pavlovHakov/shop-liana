@@ -55,16 +55,18 @@ $products = getFilteredProducts($mysqli, $categoryId, $name, $priceFrom, $priceT
    <div class="wrapper">
       <h1 class="category-title">Каталог женской одежды - <?= htmlspecialchars($categoryName) ?></h1>
 
-      <div class="content">
+      <div class="content-category">
 
          <?php if (count($products) > 0) : ?>
             <div class="block-info-category">
                <?php require_once 'templase/card-product.php'; ?>
             </div>
          <?php else : ?>
-            <p>Продукты не найдены</p>
+            <p class="empty-message-category">Продукты не найдены</p>
          <?php endif; ?>
       </div>
+
+      <?php require_once 'templase/viewed.php'; ?>
       <div class="footer"></div>
       <button id="btn-scroll">Вверх</button>
    </div>

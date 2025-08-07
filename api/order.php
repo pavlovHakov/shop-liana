@@ -1,6 +1,6 @@
 <?php
-require_once 'function/init.php';
-require_once 'function/db.php';
+require_once '../function/init.php';
+require_once '../function/db.php';
 
 if (count($_POST)) {
    $productId = intval($_POST['productId']);

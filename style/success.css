@@ -1,3 +1,34 @@
+/* Сообщение об успешном заказе */
+.checkout-success {
+   background: #03bd96;
+   color: #fff;
+   padding: 24px 32px;
+   border-radius: 10px;
+   margin: 40px auto;
+   max-width: 500px;
+   font-size: 22px;
+   text-align: center;
+   box-shadow: 0 10px 28px 8px rgb(0 0 0 / 18%);
+}
+
+.checkout-success strong {
+   display: inline-block;
+   font-weight: bold;
+   margin-bottom: 12px;
+}
+
+.success-back {
+   text-align: center;
+   margin-top: 24px;
+}
+
+.success-back-link {
+   color: #b30e01;
+   font-weight: 600;
+   text-decoration: underline;
+   font-size: 21px;
+}
+
 .wrapper {
    max-width: 800px;
    margin: 0 auto;

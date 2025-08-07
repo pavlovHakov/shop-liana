@@ -19,7 +19,7 @@ $currentCategoryId = isset($_GET['categoryId']) ? (int)$_GET['categoryId'] : nul
 
 // Проверяем, существует ли категория с таким ID
 if ($currentCategoryId && !isset($categories[$currentCategoryId])) {
-$currentCategoryId = null; // Если категория не существует, сбрасываем
+   $currentCategoryId = null; // Если категория не существует, сбрасываем
 }
 ?>
 
@@ -35,7 +35,7 @@ $currentCategoryId = null; // Если категория не существу�
             <a href="/basket.php">
                <img src="/img/icon/basket.svg" alt="Корзина">
                <?php if ($basketCount > 0): ?>
-               <span class="basket-count"><?= $basketCount ?></span>
+                  <span class="basket-count"><?= $basketCount ?></span>
                <?php endif; ?>
             </a>
          </div>
@@ -43,7 +43,7 @@ $currentCategoryId = null; // Если категория не существу�
             <a href="/favorite.php">
                <img src="/img/icon/card.svg" alt="Избранное">
                <?php if ($favoritesCount > 0): ?>
-               <span class="favorites-count"><?= $favoritesCount ?></span>
+                  <span class="favorites-count"><?= $favoritesCount ?></span>
                <?php endif; ?>
             </a>
          </div>
@@ -56,15 +56,15 @@ $currentCategoryId = null; // Если категория не существу�
    <nav class="nav-menu">
       <div class="nav-container">
          <ul class="nav-list">
-            <li class="nav-item <?= ($currentPage === 'index.php') ? 'active' : '' ?>">
+            <li class="nav-item">
                <a href="/index.php" class="nav-link <?= ($currentPage === 'index.php') ? 'active' : '' ?>">Главная</a>
             </li>
             <?php foreach ($categories as $category): ?>
-            <li class="nav-item <?= ($currentPage === 'category.php' && $currentCategoryId == $category['id']) ? 'active' : '' ?>">
-               <a href="/category.php?categoryId=<?= $category['id'] ?>" class="nav-link <?= ($currentPage === 'category.php' && $currentCategoryId == $category['id']) ? 'active' : '' ?>">
-                  <?= htmlspecialchars($category['name']) ?>
-               </a>
-            </li>
+               <li class="nav-item">
+                  <a href="/category.php?categoryId=<?= $category['id'] ?>" class="nav-link <?= ($currentPage === 'category.php' && $currentCategoryId == $category['id']) ? 'active' : '' ?>">
+                     <?= htmlspecialchars($category['name']) ?>
+                  </a>
+               </li>
             <?php endforeach; ?>
          </ul>
       </div>

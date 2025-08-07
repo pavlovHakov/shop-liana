@@ -1,4 +1,9 @@
 <?php
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require_once 'function/init.php';
 require_once 'function/db.php';
 
@@ -23,18 +28,20 @@ $categories = getCategories($mysqli);
    <?php require_once 'templase/header.php'; ?>
    <?php require_once 'templase/filter.php'; ?>
 
-   <div class="wrapper">
-      <div class="filter-btn">
-         <img src="/img/icon/filter.svg" alt="Фильтр товаров">
+   <div class="wrapper-checkout">
+      <div class="container">
+         <div class="checkout-success">
+            <strong>Спасибо за заказ!</strong><br>
+            Ваш заказ успешно оформлен и принят в обработку.<br>
+            Мы свяжемся с вами для подтверждения.
+         </div>
+         <div class="success-back">
+            <a href="/" class="success-back-link">Вернуться на главную</a>
+         </div>
       </div>
-      <h1>Success!</h1>
-      <p>Your order has been placed successfully.</p>
    </div>
-   <a href="/">Go back to home</a>
 
    <div class="footer"></div>
-   </div>
-   <script src="/js/toogle-filter.js"></script>
 </body>
 
 </html>

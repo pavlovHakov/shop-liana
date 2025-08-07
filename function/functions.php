@@ -1,5 +1,18 @@
 <?php
 
+// Функция для получения общего количества товаров
+// Эта функция выполняет SQL-запрос для получения количества товаров в таблице products
+function getTotalProducts($mysqli)
+{
+   $result = $mysqli->query("SELECT COUNT(*) as total FROM products");
+   if ($result) {
+      $row = $result->fetch_assoc();
+      return (int)$row['total'];
+   }
+   return 0;
+}
+
+
 function getCategories($mysqli)
 {
    $result = $mysqli->query("SELECT id, name FROM category");
@@ -122,10 +135,10 @@ function addToBasket($mysqli, $productId, $sessionId, $quantity = 1, $size = nul
       // Если товар уже есть, увеличиваем количество
       $row = $result->fetch_assoc();
       $newQuantity = $row['quantity'] + $quantity;
-      
+
       $updateStmt = $mysqli->prepare("UPDATE basket SET quantity = ? WHERE id = ?");
       $updateStmt->bind_param("ii", $newQuantity, $row['id']);
-      
+
       if ($updateStmt->execute()) {
          return ['success' => true, 'message' => 'Количество товара в корзине увеличено'];
       } else {
@@ -135,7 +148,7 @@ function addToBasket($mysqli, $productId, $sessionId, $quantity = 1, $size = nul
       // Добавляем новый товар в корзину
       $stmt = $mysqli->prepare("INSERT INTO basket (productId, sessionId, quantity, size) VALUES (?, ?, ?, ?)");
       $stmt->bind_param("isis", $productId, $sessionId, $quantity, $size);
-      
+
       if ($stmt->execute()) {
          return ['success' => true, 'message' => 'Товар добавлен в корзину'];
       } else {
@@ -203,12 +216,12 @@ function getBasketCount($mysqli, $sessionId)
    $stmt->bind_param("s", $sessionId);
    $stmt->execute();
    $result = $stmt->get_result();
-   
+
    if ($result->num_rows > 0) {
       $row = $result->fetch_assoc();
       return (int)$row['total'];
    }
-   
+
    return 0;
 }
 
@@ -224,12 +237,12 @@ function getBasketTotal($mysqli, $sessionId)
    $stmt->bind_param("s", $sessionId);
    $stmt->execute();
    $result = $stmt->get_result();
-   
+
    if ($result->num_rows > 0) {
       $row = $result->fetch_assoc();
       return (float)$row['total'];
    }
-   
+
    return 0.0;
 }
 
@@ -256,64 +269,64 @@ function isActive($page, $current_page)
 // Функция для фильтрации товаров с учетом категории, цены и поиска
 function getFilteredProducts($mysqli, $categoryId = 0, $name = '', $priceFrom = 0, $priceTo = 0)
 {
-    $conditions = [];
-    $params = [];
-    $types = '';
-    
-    // Базовый запрос
-    $sql = "SELECT * FROM product WHERE 1=1";
-    
-    // Фильтр по категории
-    if ($categoryId > 0) {
-        $conditions[] = "categoryId = ?";
-        $params[] = $categoryId;
-        $types .= 'i';
-    }
-    
-    // Фильтр по названию
-    if (!empty($name)) {
-        $conditions[] = "name LIKE ?";
-        $params[] = '%' . $name . '%';
-        $types .= 's';
-    }
-    
-    // Фильтр по минимальной цене
-    if ($priceFrom > 0) {
-        $conditions[] = "price >= ?";
-        $params[] = $priceFrom;
-        $types .= 'i';
-    }
-    
-    // Фильтр по максимальной цене
-    if ($priceTo > 0) {
-        $conditions[] = "price <= ?";
-        $params[] = $priceTo;
-        $types .= 'i';
-    }
-    
-    // Добавляем условия к запросу
-    if (!empty($conditions)) {
-        $sql .= " AND " . implode(" AND ", $conditions);
-    }
-    
-    $sql .= " ORDER BY id DESC";
-    
-    // Подготавливаем и выполняем запрос
-    if (!empty($params)) {
-        $stmt = $mysqli->prepare($sql);
-        $stmt->bind_param($types, ...$params);
-        $stmt->execute();
-        $result = $stmt->get_result();
-    } else {
-        $result = $mysqli->query($sql);
-    }
-    
-    $products = [];
-    if ($result && $result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $products[] = $row;
-        }
-    }
-    
-    return $products;
+   $conditions = [];
+   $params = [];
+   $types = '';
+
+   // Базовый запрос
+   $sql = "SELECT * FROM product WHERE 1=1";
+
+   // Фильтр по категории
+   if ($categoryId > 0) {
+      $conditions[] = "categoryId = ?";
+      $params[] = $categoryId;
+      $types .= 'i';
+   }
+
+   // Фильтр по названию
+   if (!empty($name)) {
+      $conditions[] = "name LIKE ?";
+      $params[] = '%' . $name . '%';
+      $types .= 's';
+   }
+
+   // Фильтр по минимальной цене
+   if ($priceFrom > 0) {
+      $conditions[] = "price >= ?";
+      $params[] = $priceFrom;
+      $types .= 'i';
+   }
+
+   // Фильтр по максимальной цене
+   if ($priceTo > 0) {
+      $conditions[] = "price <= ?";
+      $params[] = $priceTo;
+      $types .= 'i';
+   }
+
+   // Добавляем условия к запросу
+   if (!empty($conditions)) {
+      $sql .= " AND " . implode(" AND ", $conditions);
+   }
+
+   $sql .= " ORDER BY id DESC";
+
+   // Подготавливаем и выполняем запрос
+   if (!empty($params)) {
+      $stmt = $mysqli->prepare($sql);
+      $stmt->bind_param($types, ...$params);
+      $stmt->execute();
+      $result = $stmt->get_result();
+   } else {
+      $result = $mysqli->query($sql);
+   }
+
+   $products = [];
+   if ($result && $result->num_rows > 0) {
+      while ($row = $result->fetch_assoc()) {
+         $products[] = $row;
+      }
+   }
+
+   return $products;
 }

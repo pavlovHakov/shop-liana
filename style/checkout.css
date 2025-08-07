@@ -1,0 +1,241 @@
+/* Ошибки оформления заказа */
+.checkout-errors {
+   background: #f53f4a;
+   color: #fff;
+   padding: 12px 18px;
+   border-radius: 6px;
+   margin-bottom: 18px;
+}
+
+/* Вспомогательные стили для обязательных и необязательных полей */
+.required-star {
+   color: #f53f4a;
+}
+
+.field-note {
+   color: #888;
+   font-size: 0.95em;
+}
+
+/* Уведомление об успешном заказе */
+.checkout-success {
+   background: #2ecc40;
+   color: #fff;
+   padding: 24px 32px;
+   border-radius: 10px;
+   margin: 40px auto;
+   max-width: 500px;
+   font-size: 22px;
+   text-align: center;
+   box-shadow: 0 4px 24px rgba(46, 204, 64, 0.18);
+}
+
+/* style для оформления заказа */
+
+.wrapper-checkout {
+   max-width: 800px;
+   margin: 40px auto;
+   background: #fff;
+   border-radius: 12px;
+   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
+   padding: 40px 32px;
+}
+
+.checkout-title {
+   font-size: 32px;
+   color: #06ada8;
+   text-align: center;
+   margin-bottom: 32px;
+   font-weight: 700;
+   letter-spacing: 1px;
+}
+
+.checkout-content {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 32px;
+   justify-content: space-between;
+}
+
+.checkout-form {
+   flex: 1 1 340px;
+   background: #f7f7f7;
+   border-radius: 8px;
+   padding: 24px 20px;
+   box-shadow: 0 2px 8px rgba(6, 173, 168, 0.07);
+}
+
+.form-section {
+   margin-bottom: 24px;
+}
+
+.section-title {
+   font-size: 20px;
+   color: #347424;
+   margin-bottom: 14px;
+   font-weight: 600;
+}
+
+.form-group {
+   margin-bottom: 16px;
+}
+
+.checkout-form label {
+   font-size: 16px;
+   color: #333;
+   margin-bottom: 6px;
+   font-weight: 500;
+}
+
+.checkout-form input,
+.checkout-form textarea {
+   padding: 10px;
+   border: 1px solid #b7e2e0;
+   border-radius: 4px;
+   font-size: 16px;
+   background: #f9f9f9;
+   margin-bottom: 12px;
+   transition: border 0.2s;
+}
+
+.checkout-form input:focus,
+.checkout-form textarea:focus {
+   border-color: #06ada8;
+   outline: none;
+}
+
+.checkout-form textarea {
+   resize: vertical;
+   min-height: 60px;
+}
+
+.delivery-options,
+.payment-options {
+   display: flex;
+   gap: 18px;
+   margin-bottom: 12px;
+}
+
+.delivery-option,
+.payment-option {
+   background: #fff;
+   border-radius: 6px;
+   box-shadow: 0 1px 4px rgba(6, 173, 168, 0.07);
+   padding: 10px 14px;
+   display: flex;
+   align-items: center;
+   gap: 8px;
+}
+
+.option-title {
+   font-weight: 600;
+   color: #347424;
+}
+
+.option-description {
+   font-size: 13px;
+   color: #666;
+   margin-left: 8px;
+}
+
+.delivery-address {
+   margin-top: 10px;
+}
+
+.btn-place-order {
+   background: #06ada8;
+   color: white;
+   border: none;
+   padding: 12px 20px;
+   border-radius: 3px;
+   font-size: 16px;
+   cursor: pointer;
+   transition: all 0.3s ease;
+}
+
+.btn-place-order:hover {
+   background: #059a95;
+   box-shadow: 0 4px 16px rgba(6, 173, 168, 0.18);
+}
+
+.order-summary {
+   flex: 1 1 280px;
+   background: #f5f5f5;
+   border-radius: 8px;
+   padding: 24px 20px;
+   box-shadow: 0 2px 8px rgba(6, 173, 168, 0.07);
+}
+
+.order-items {
+   margin-bottom: 18px;
+}
+
+.order-item {
+   display: flex;
+   align-items: center;
+   gap: 16px;
+   margin-bottom: 14px;
+   background: #fff;
+   border-radius: 6px;
+   box-shadow: 0 1px 4px rgba(6, 173, 168, 0.07);
+   padding: 10px 8px;
+}
+
+.item-image img {
+   width: 54px;
+   height: 54px;
+   object-fit: cover;
+   border-radius: 4px;
+   border: 1px solid #b7e2e0;
+}
+
+.item-details h4 {
+   font-size: 16px;
+   color: #121313;
+   margin-bottom: 2px;
+}
+
+.item-size,
+.item-quantity {
+   font-size: 14px;
+   color: #666;
+}
+
+.item-price {
+   font-size: 16px;
+   color: #f53f4a;
+   font-weight: 500;
+   margin-left: auto;
+}
+
+.summary-totals {
+   margin-top: 18px;
+   border-top: 1px solid #b7e2e0;
+   padding-top: 12px;
+}
+
+.total-line {
+   display: flex;
+   justify-content: space-between;
+   font-size: 16px;
+   margin-bottom: 8px;
+}
+
+.total-final {
+   font-size: 18px;
+   font-weight: 700;
+   color: #06ada8;
+}
+
+.btn-back-to-basket {
+   display: inline-block;
+   margin-top: 16px;
+   color: #347424;
+   text-decoration: underline;
+   font-size: 15px;
+   transition: color 0.2s;
+}
+
+.btn-back-to-basket:hover {
+   color: #059a95;
+}

@@ -54,8 +54,8 @@ $basketTotal = getBasketTotal($mysqli, $sessionId);
                         <div class="basket-item-controls">
                            <div class="quantity-controls">
                               <button class="quantity-btn quantity-minus" data-basket-id="<?= $item['id'] ?>">-</button>
-                              <input type="number" class="quantity-input" value="<?= $item['quantity'] ?>" 
-                                     min="1" data-basket-id="<?= $item['id'] ?>">
+                              <input type="number" class="quantity-input" value="<?= $item['quantity'] ?>"
+                                 min="1" data-basket-id="<?= $item['id'] ?>">
                               <button class="quantity-btn quantity-plus" data-basket-id="<?= $item['id'] ?>">+</button>
                            </div>
                            <div class="basket-item-total">
@@ -63,14 +63,14 @@ $basketTotal = getBasketTotal($mysqli, $sessionId);
                            </div>
                            <button class="btn-remove-item" data-basket-id="<?= $item['id'] ?>">
                               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 56 59">
-                                 <path d="M52 14a4 4 0 1 0 0-8H41.985a.982.982 0 0 0-.2-.625l-1-1.247A10.946 10.946 0 0 0 32.193 0h-8.386a10.942 10.942 0 0 0-8.589 4.128l-1 1.247a.982.982 0 0 0-.2.625H4a4 4 0 1 0 0 8zM16.779 5.378A8.955 8.955 0 0 1 23.807 2h8.386a8.958 8.958 0 0 1 7.029 3.378l.5.622H16.281zM4 16l3.45 41.22A2.24 2.24 0 0 0 9.85 59h36.3a2.24 2.24 0 0 0 2.4-1.78L52 16zm15 8a1 1 0 0 1-1-1 2 2 0 1 0-4 0v27a1 1 0 0 1-2 0V23a4 4 0 1 1 8 0 1 1 0 0 1-1 1zm12 0a1 1 0 0 1-1-1 2 2 0 1 0-4 0v27a1 1 0 0 1-2 0V23a4 4 0 1 1 8 0 1 1 0 0 1-1 1zm12 0a1 1 0 0 1-1-1 2 2 0 1 0-4 0v27a1 1 0 0 1-2 0V23a4 4 0 1 1 8 0 1 1 0 0 1-1 1z"/>
+                                 <path d="M52 14a4 4 0 1 0 0-8H41.985a.982.982 0 0 0-.2-.625l-1-1.247A10.946 10.946 0 0 0 32.193 0h-8.386a10.942 10.942 0 0 0-8.589 4.128l-1 1.247a.982.982 0 0 0-.2.625H4a4 4 0 1 0 0 8zM16.779 5.378A8.955 8.955 0 0 1 23.807 2h8.386a8.958 8.958 0 0 1 7.029 3.378l.5.622H16.281zM4 16l3.45 41.22A2.24 2.24 0 0 0 9.85 59h36.3a2.24 2.24 0 0 0 2.4-1.78L52 16zm15 8a1 1 0 0 1-1-1 2 2 0 1 0-4 0v27a1 1 0 0 1-2 0V23a4 4 0 1 1 8 0 1 1 0 0 1-1 1zm12 0a1 1 0 0 1-1-1 2 2 0 1 0-4 0v27a1 1 0 0 1-2 0V23a4 4 0 1 1 8 0 1 1 0 0 1-1 1zm12 0a1 1 0 0 1-1-1 2 2 0 1 0-4 0v27a1 1 0 0 1-2 0V23a4 4 0 1 1 8 0 1 1 0 0 1-1 1z" />
                               </svg>
                            </button>
                         </div>
                      </div>
                   <?php endforeach; ?>
                </div>
-               
+
                <div class="basket-summary">
                   <div class="summary-content">
                      <h3>Итого к оплате</h3>
@@ -78,13 +78,16 @@ $basketTotal = getBasketTotal($mysqli, $sessionId);
                         <span class="total-amount"><?= $basketTotal ?> ₴</span>
                      </div>
                      <div class="summary-actions">
+                        <div>
+                           <a href="checkout.php" class="btn-place-order">Оформить заказ</a>
+                        </div>
                         <button class="btn-clear-basket">Очистить корзину</button>
-                        <button class="btn-checkout">Оформить заказ</button>
                      </div>
                   </div>
                </div>
             </div>
          <?php endif; ?>
+
       </div>
    </div>
 
@@ -106,11 +109,11 @@ $basketTotal = getBasketTotal($mysqli, $sessionId);
             const price = parseFloat(item.querySelector('.basket-item-price').textContent);
             const quantity = parseInt(item.querySelector('.quantity-input').value);
             const itemTotal = price * quantity;
-            
+
             item.querySelector('.basket-item-total').textContent = itemTotal + ' ₴';
             total += itemTotal;
          });
-         
+
          document.querySelector('.total-amount').textContent = total + ' ₴';
       }
 
@@ -120,7 +123,7 @@ $basketTotal = getBasketTotal($mysqli, $sessionId);
             const basketId = this.getAttribute('data-basket-id');
             const input = document.querySelector(`.quantity-input[data-basket-id="${basketId}"]`);
             let quantity = parseInt(input.value);
-            
+
             if (quantity > 1) {
                quantity--;
                input.value = quantity;
@@ -134,7 +137,7 @@ $basketTotal = getBasketTotal($mysqli, $sessionId);
             const basketId = this.getAttribute('data-basket-id');
             const input = document.querySelector(`.quantity-input[data-basket-id="${basketId}"]`);
             let quantity = parseInt(input.value);
-            
+
             quantity++;
             input.value = quantity;
             updateQuantity(basketId, quantity);
@@ -146,12 +149,12 @@ $basketTotal = getBasketTotal($mysqli, $sessionId);
          input.addEventListener('change', function() {
             const basketId = this.getAttribute('data-basket-id');
             let quantity = parseInt(this.value);
-            
+
             if (quantity < 1) {
                quantity = 1;
                this.value = quantity;
             }
-            
+
             updateQuantity(basketId, quantity);
          });
       });
@@ -173,7 +176,7 @@ $basketTotal = getBasketTotal($mysqli, $sessionId);
             .then(data => {
                if (data.success) {
                   updateBasketTotal();
-                  
+
                   // Обновляем счетчик в header
                   if (typeof updateBasketCount === 'function') {
                      updateBasketCount();

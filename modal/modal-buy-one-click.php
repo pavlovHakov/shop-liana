@@ -20,7 +20,7 @@
       <div class="block-modal-buy-form">
          <h3 class="modal-buy-form-title">Заполните форму</h3>
          <p class="modal-buy-form-subtitle">Мы свяжемся с вами для подтверждения заказа</p>
-         <form action="/order.php" method="POST">
+         <form action="api/order.php" method="POST">
             <input type="hidden" name="productId" value="<?= $product['id'] ?>">
             <input type="hidden" name="price" value="<?= $product['price'] ?>">
             <input class="modal-name-input" type="text" name="username" placeholder="Ваше имя" required>

@@ -1,4 +1,9 @@
 <?php
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
 require_once 'function/db.php';
 require_once 'function/functions.php';
@@ -13,6 +18,53 @@ if (empty($basketItems)) {
     header('Location: /basket.php');
     exit;
 }
+
+$errors = [];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = trim($_POST['customerName'] ?? '');
+    $phone = trim($_POST['customerPhone'] ?? '');
+    $email = trim($_POST['customerEmail'] ?? '');
+    $deliveryType = $_POST['deliveryType'] ?? '';
+    $deliveryCity = trim($_POST['deliveryCity'] ?? '');
+    $deliveryAddress = trim($_POST['deliveryAddress'] ?? '');
+    $paymentType = $_POST['paymentType'] ?? '';
+    $comment = trim($_POST['orderComment'] ?? '');
+
+    if ($name === '') {
+        $errors[] = 'Введите имя и фамилию.';
+    }
+    if (!preg_match('/^\+?\d[\d\s\-\(\)]{9,}$/', $phone)) {
+        $errors[] = 'Введите корректный телефон.';
+    }
+    if ($deliveryType === '') {
+        $errors[] = 'Выберите способ доставки.';
+    }
+    if (($deliveryType === 'courier' || $deliveryType === 'post') && ($deliveryCity === '' || $deliveryAddress === '')) {
+        $errors[] = 'Заполните город и адрес доставки.';
+    }
+    if ($paymentType === '') {
+        $errors[] = 'Выберите способ оплаты.';
+    }
+    if (empty($errors)) {
+        // Собираем размеры из корзины
+        $sizes = array_map(function ($item) {
+            return $item['size'];
+        }, $basketItems);
+        $sizesJson = json_encode($sizes, JSON_UNESCAPED_UNICODE);
+        $basketJson = json_encode($basketItems, JSON_UNESCAPED_UNICODE);
+        // Сохраняем заказ в таблицу full_registration (добавлено поле sizes)
+        $stmt = $mysqli->prepare("INSERT INTO full_registration (name, phone, email, delivery_type, delivery_city, delivery_address, payment_type, comment, basket, sizes, total) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param('ssssssssssi', $name, $phone, $email, $deliveryType, $deliveryCity, $deliveryAddress, $paymentType, $comment, $basketJson, $sizesJson, $basketTotal);
+        $stmt->execute();
+        $stmt->close();
+
+        // Очищаем корзину
+        $mysqli->query("DELETE FROM basket WHERE sessionId='$sessionId'");
+
+        header('Location: success.php');
+        exit;
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -23,46 +75,50 @@ if (empty($basketItems)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style/reset.css">
     <link rel="stylesheet" href="style/fonts/robotocondensed.css">
-    <link rel="stylesheet" href="style/header.css">
     <link rel="stylesheet" href="style/checkout.css">
     <link rel="stylesheet" href="style/btn-scroll.css">
     <title>Оформление заказа</title>
 </head>
 
 <body>
-    <?php include 'templase/header.php'; ?>
 
     <div class="wrapper-checkout">
         <div class="container">
             <h1 class="checkout-title">Оформление заказа</h1>
-
+            <?php if (!empty($errors)): ?>
+                <div class="checkout-errors">
+                    <?php foreach ($errors as $error): ?>
+                        <div><?= htmlspecialchars($error) ?></div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
             <div class="checkout-content">
                 <!-- Форма заказа -->
                 <div class="checkout-form">
-                    <form id="orderForm">
+                    <form id="orderForm" method="POST" action="/checkout.php">
                         <div class="form-section">
-                            <h2>Контактная информация</h2>
+                            <h2 class="section-title">Контактная информация</h2>
                             <div class="form-group">
-                                <label for="customerName">Имя и фамилия *</label>
-                                <input type="text" id="customerName" name="customerName" required>
+                                <label for="customerName">Имя и фамилия <span class="required-star">*</span> <span class="field-note">(обязательно)</span></label>
+                                <input type="text" id="customerName" name="customerName"
+                                    placeholder="Иван Иванов">
                             </div>
                             <div class="form-group">
-                                <label for="customerPhone">Телефон *</label>
-                                <input type="tel" id="customerPhone" name="customerPhone" required 
-                                       placeholder="+380 (XX) XXX-XX-XX">
+                                <label for="customerPhone">Телефон <span class="required-star">*</span> <span class="field-note">(обязательно)</span></label>
+                                <input type="tel" id="customerPhone" name="customerPhone"
+                                    placeholder="+380 (XX) XXX-XX-XX">
                             </div>
                             <div class="form-group">
-                                <label for="customerEmail">Email</label>
-                                <input type="email" id="customerEmail" name="customerEmail" 
-                                       placeholder="example@email.com">
+                                <label for="customerEmail">Email <span class="field-note">(необязательно)</span></label>
+                                <input type="email" id="customerEmail" name="customerEmail"
+                                    placeholder="example@email.com">
                             </div>
                         </div>
-
                         <div class="form-section">
-                            <h2>Доставка</h2>
+                            <h2 class="section-title">Доставка</h2>
                             <div class="delivery-options">
                                 <div class="delivery-option">
-                                    <input type="radio" id="delivery-pickup" name="deliveryType" value="pickup" checked>
+                                    <input type="radio" id="delivery-pickup" name="deliveryType" value="pickup">
                                     <label for="delivery-pickup">
                                         <span class="option-title">Самовывоз</span>
                                         <span class="option-description">Бесплатно</span>
@@ -83,22 +139,21 @@ if (empty($basketItems)) {
                                     </label>
                                 </div>
                             </div>
-
-                            <div class="delivery-address" id="deliveryAddress" style="display: none;">
+                            <div class="delivery-address" id="deliveryAddress">
                                 <div class="form-group">
-                                    <label for="deliveryCity">Город *</label>
-                                    <input type="text" id="deliveryCity" name="deliveryCity">
+                                    <label for="deliveryCity">Город <span style="color:#f53f4a">*</span> <span style="color:#888;font-size:0.95em">(обязательно для курьера/Новой Почты)</span></label>
+                                    <input type="text" id="deliveryCity" name="deliveryCity"
+                                        placeholder="Киев">
                                 </div>
                                 <div class="form-group">
-                                    <label for="deliveryAddress">Адрес *</label>
-                                    <textarea id="deliveryAddressText" name="deliveryAddress" rows="3" 
-                                              placeholder="Улица, дом, квартира"></textarea>
+                                    <label for="deliveryAddress">Адрес <span style="color:#f53f4a">*</span> <span style="color:#888;font-size:0.95em">(обязательно для курьера/Новой Почты)</span></label>
+                                    <textarea id="deliveryAddressText" name="deliveryAddress" rows="3"
+                                        placeholder="Улица, дом, квартира"></textarea>
                                 </div>
                             </div>
                         </div>
-
                         <div class="form-section">
-                            <h2>Оплата</h2>
+                            <h2 class="section-title">Оплата</h2>
                             <div class="payment-options">
                                 <div class="payment-option">
                                     <input type="radio" id="payment-cash" name="paymentType" value="cash" checked>
@@ -114,28 +169,28 @@ if (empty($basketItems)) {
                                 </div>
                             </div>
                         </div>
-
                         <div class="form-section">
-                            <h2>Комментарий к заказу</h2>
+                            <h2 class="section-title">Комментарий к заказу <span style="color:#888;font-size:0.95em">(необязательно)</span></h2>
                             <div class="form-group">
-                                <textarea id="orderComment" name="orderComment" rows="4" 
-                                          placeholder="Дополнительная информация к заказу"></textarea>
+                                <textarea id="orderComment" name="orderComment" rows="4"
+                                    placeholder="Дополнительная информация к заказу"></textarea>
                             </div>
                         </div>
+                        <button type="submit" class="btn-place-order">
+                            Оформить заказ
+                        </button>
                     </form>
                 </div>
-
                 <!-- Сводка заказа -->
                 <div class="order-summary">
                     <div class="summary-content">
-                        <h2>Ваш заказ</h2>
-                        
+                        <h2 class="section-title">Ваш заказ</h2>
                         <div class="order-items">
                             <?php foreach ($basketItems as $item): ?>
                                 <div class="order-item">
                                     <div class="item-image">
-                                        <img src="/img/<?= htmlspecialchars($item['img']) ?>" 
-                                             alt="<?= htmlspecialchars($item['name']) ?>">
+                                        <img src="/img/<?= htmlspecialchars($item['img']) ?>"
+                                            alt="<?= htmlspecialchars($item['name']) ?>">
                                     </div>
                                     <div class="item-details">
                                         <h4><?= htmlspecialchars($item['name']) ?></h4>
@@ -150,7 +205,6 @@ if (empty($basketItems)) {
                                 </div>
                             <?php endforeach; ?>
                         </div>
-
                         <div class="summary-totals">
                             <div class="total-line">
                                 <span>Товары:</span>
@@ -166,10 +220,6 @@ if (empty($basketItems)) {
                             </div>
                         </div>
 
-                        <button type="submit" form="orderForm" class="btn-place-order">
-                            Оформить заказ
-                        </button>
-                        
                         <a href="/basket.php" class="btn-back-to-basket">Вернуться в корзину</a>
                     </div>
                 </div>
