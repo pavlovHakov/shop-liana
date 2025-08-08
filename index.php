@@ -39,18 +39,21 @@ while ($row = $result->fetch_assoc()) {
   <link rel="stylesheet" href="style/index.css">
   <link rel="stylesheet" href="style/checkout.css">
   <link rel="stylesheet" href="style/btn-scroll.css">
-  <title>Главная</title>
+  <link rel="stylesheet" href="style/loader.css">
 
+  <title>Главная</title>
 </head>
 
 <body>
+  <script src="js/header-show-hide.js"></script>
+  <script src="js/product-lazy-loader.js"></script>
   <?php require_once 'templase/filter.php'; ?>
   <?php require_once 'templase/header.php'; ?>
+
   <div class="filter-btn">
     <img src="/img/icon/filter.svg" alt="Фильтр товаров">
   </div>
   <div class="wrapper">
-    <h1 class="category-title">Все товары</h1>
 
     <div class="content">
       <?php

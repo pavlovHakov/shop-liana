@@ -37,12 +37,15 @@ if ($result->num_rows > 0) {
    <link rel="stylesheet" href="style/modal-size.css">
    <link rel="stylesheet" href="style/modal-buy-one-click.css">
    <link rel="stylesheet" href="style/btn-scroll.css">
+   <link rel="stylesheet" href="style/loader.css">
 
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.0/dist/fancybox/fancybox.css" />
-   <title><?= $product['name'] ?></title>
+
 </head>
 
 <body>
+   <script src="js/header-show-hide.js"></script>
+   <script src="js/product-lazy-loader.js"></script>
    <?php require_once 'templase/filter.php'; ?>
    <?php require_once 'modal/modal-size.php'; ?>
    <?php require_once 'modal/modal-buy-one-click.php'; ?>
@@ -59,21 +62,18 @@ if ($result->num_rows > 0) {
                   <?php if (!empty($imgGallery)): ?>
                      <?php foreach ($imgGallery as $img): ?>
                         <?php if ($img['img_storage'] != $product['id']) continue; ?>
-
                         <a data-fancybox="gallery" href="/img/<?= $img['img'] ?>" class="product-img">
-                           <img src="/img/<?= $img['img'] ?>" alt="<?= $product['name'] ?>" />
+                           <img class="lazy-img" src="/img/placeholder.webp" data-src="/img/<?= $img['img'] ?>" alt="<?= $product['name'] ?>" />
                         </a>
-
                      <?php endforeach; ?>
                   <?php endif; ?>
                </div>
             </div>
             <!-- Основное изображение товара -->
-            <div class="container-img-product">
-
+            <div class="block-img">
                <a data-fancybox="gallery" href="/img/<?= $product['img'] ?>" class="product-img">
-
-                  <img src="/img/<?= $product['img'] ?>" alt="<?= $product['name'] ?>" />
+                  <span class="img-loader"></span>
+                  <img class="lazy-img" src="/img/placeholder.webp" data-src="/img/<?= $product['img'] ?>" alt="<?= $product['name'] ?>" />
                </a>
             </div>
          </div>
@@ -180,127 +180,12 @@ if ($result->num_rows > 0) {
    <script src="js/btn-scroll.js"></script>
    <script src="js/icon-favorite.js"></script>
    <script src="js/viewed.js"></script>
+   <script src="js/hello.js"></script>
+   <script src="js/size-handler.js"></script>
    <script>
       document.addEventListener('DOMContentLoaded', function() {
          addViewedProduct('<?= $product['id'] ?>');
       });
-   </script>
-   <script>
-      // Обработчик для выбора размера
-      document.addEventListener('DOMContentLoaded', function() {
-         // Обработка выбора размера
-         document.querySelectorAll('.size-product-item').forEach(label => {
-            label.addEventListener('click', function() {
-               // Убираем активный класс со всех размеров
-               document.querySelectorAll('.size-product-item').forEach(item => {
-                  item.classList.remove('active');
-               });
-
-               // Добавляем активный класс к выбранному размеру
-               this.classList.add('active');
-
-               // Отмечаем соответствующий radio button
-               const radio = this.querySelector('input[type="radio"]');
-               if (radio) {
-                  radio.checked = true;
-               }
-            });
-         });
-
-         // Специальный обработчик для кнопки избранного на странице товара
-         const favoriteBtn = document.querySelector('.btn-favorites');
-         if (favoriteBtn) {
-            const productId = favoriteBtn.getAttribute('data-product-id');
-            const path = favoriteBtn.querySelector('.favorite-path');
-
-            // Проверяем текущее состояние
-            fetch(`/api/favorites.php?action=check&productId=${productId}`)
-               .then(response => response.json())
-               .then(data => {
-                  if (data.isFavorite) {
-                     path.style.fill = "rgb(228, 8, 8)";
-                     favoriteBtn.textContent = "В избранном";
-                  } else {
-                     path.style.fill = "rgb(6, 173, 168)";
-                     favoriteBtn.textContent = "Добавить в избранное";
-                  }
-               })
-               .catch(error => {
-                  console.error('Ошибка при проверке избранного:', error);
-               });
-
-            // Обработчик клика
-            favoriteBtn.addEventListener('click', function(e) {
-               e.preventDefault();
-
-               const isFavorite = path.style.fill === "rgb(228, 8, 8)";
-               const action = isFavorite ? 'remove' : 'add';
-
-               fetch('/api/favorites.php', {
-                     method: 'POST',
-                     headers: {
-                        'Content-Type': 'application/json',
-                     },
-                     body: JSON.stringify({
-                        action: action,
-                        productId: productId
-                     })
-                  })
-                  .then(response => response.json())
-                  .then(data => {
-                     if (data.success) {
-                        if (action === 'add') {
-                           path.style.fill = "rgb(228, 8, 8)";
-                           favoriteBtn.textContent = "В избранном";
-                           showNotification(data.message);
-                        } else {
-                           path.style.fill = "rgb(6, 173, 168)";
-                           favoriteBtn.textContent = "Добавить в избранное";
-                           showNotification(data.message);
-                        }
-
-                        // Обновляем счетчик в header
-                        if (typeof updateFavoritesCount === 'function') {
-                           updateFavoritesCount();
-                        }
-                     } else {
-                        showNotification(data.message, 'error');
-                     }
-                  })
-                  .catch(error => {
-                     console.error('Ошибка:', error);
-                     showNotification('Произошла ошибка при работе с избранным', 'error');
-                  });
-            });
-         }
-      });
-
-      // Функция для показа уведомлений
-      function showNotification(message, type = 'success') {
-         const notification = document.createElement('div');
-         notification.className = `notification ${type}`;
-         notification.textContent = message;
-         notification.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 220px;
-            padding: 15px 20px;
-            color: white;
-            font-weight: bold;
-            z-index: 1000;
-            transition: all 0.3s ease;
-            ${type === 'success' ? 'background-color: #4CAF50;' : 'background-color: #f44336;'}
-         `;
-
-         document.body.appendChild(notification);
-
-         setTimeout(() => {
-            notification.style.opacity = '0';
-            setTimeout(() => {
-               document.body.removeChild(notification);
-            }, 300);
-         }, 3000);
-      }
    </script>
 </body>
 

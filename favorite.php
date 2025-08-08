@@ -20,6 +20,9 @@ $favorites = getFavorites($mysqli, $sessionId);
    <link rel="stylesheet" href="style/header.css">
    <link rel="stylesheet" href="style/btn-scroll.css">
    <title>Избранное</title>
+   <script src="js/header-show-hide.js"></script>
+
+   <script src="js/img-lazy.js"></script>
 </head>
 
 <body>
@@ -43,8 +46,11 @@ $favorites = getFavorites($mysqli, $sessionId);
                            alt="<?= htmlspecialchars($product['name']) ?>">
                      </div>
                      <div class="favorite-item-info">
-                        <h3 class="favorite-item-name"><?= htmlspecialchars($product['name']) ?></h3>
+                        <div class="block-name">
+                           <h3 class="favorite-item-name"><?= htmlspecialchars($product['name']) ?></h3>
+                        </div>
                         <p class="favorite-item-price"><?= $product['price'] ?> ₴</p>
+
                         <div class="favorite-item-actions">
                            <a href="/product.php?id=<?= $product['id'] ?>" class="btn-view-product">Посмотреть товар</a>
                            <div class="btn-remove-favorite" data-product-id="<?= $product['id'] ?>">
@@ -63,52 +69,7 @@ $favorites = getFavorites($mysqli, $sessionId);
 
    <script src="js/header-favorites.js"></script>
    <script src="js/icon-favorite.js"></script>
-   <script>
-      // Обработчик для кнопки удаления из избранного
-      document.querySelectorAll('.btn-remove-favorite').forEach(button => {
-         button.addEventListener('click', function() {
-            const productId = this.getAttribute('data-product-id');
-            const favoriteItem = this.closest('.favorite-item');
-
-            fetch('/api/favorites.php', {
-                  method: 'POST',
-                  headers: {
-                     'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify({
-                     action: 'remove',
-                     productId: productId
-                  })
-               })
-               .then(response => response.json())
-               .then(data => {
-                  if (data.success) {
-                     // Удаляем элемент из DOM
-                     favoriteItem.remove();
-
-                     // Проверяем, остались ли еще товары
-                     const remainingItems = document.querySelectorAll('.favorite-item');
-                     if (remainingItems.length === 0) {
-                        location.reload(); // Перезагружаем страницу для показа пустого состояния
-                     }
-
-                     showNotification(data.message);
-
-                     // Обновляем счетчик в header
-                     if (typeof updateFavoritesCount === 'function') {
-                        updateFavoritesCount();
-                     }
-                  } else {
-                     showNotification(data.message, 'error');
-                  }
-               })
-               .catch(error => {
-                  console.error('Ошибка:', error);
-                  showNotification('Произошла ошибка при удалении товара', 'error');
-               });
-         });
-      });
-   </script>
+   <script src="js/remove-favorite.js"></script>
 </body>
 
 </html>

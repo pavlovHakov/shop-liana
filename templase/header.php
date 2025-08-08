@@ -24,7 +24,7 @@ if ($currentCategoryId && !isset($categories[$currentCategoryId])) {
 ?>
 
 
-<header class="header">
+<header class="header" id="mainHeader">
    <div class="header-top">
       <div class="logo">
          <a class="" href="/index.php">Liana</a>

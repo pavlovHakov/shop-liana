@@ -1,11 +1,12 @@
 .content-product {
    width: 87%;
    margin: 0px auto;
-   padding-top: 20px;
+   padding-top: 10px;
    display: flex;
    flex-direction: row;
    gap: 10px;
    margin-bottom: 43px;
+   margin-top: 100px;
 }
 
 .wrapp-container-img-product-gallery {
@@ -40,14 +41,27 @@
    height: auto;
 }
 
-.container-img-product img {
-   width: 91%;
+.block-img,
+.product-img {
+   width: 100%;
    height: auto;
-   object-fit: cover;
-   cursor: pointer;
+   aspect-ratio: 7 / 9;
+   background: #eff1f1;
+   position: relative;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   overflow: hidden;
 }
 
-.container-block-gallery {
+.block-img img,
+.product-img img {
+   width: 100%;
+   height: auto;
+   object-fit: cover;
+}
+
+/* .container-block-gallery {
    width: 100%;
    height: auto;
    display: flex;
@@ -55,10 +69,10 @@
    gap: 10px;
    overflow-x: auto;
    position: relative;
-}
+} */
 
 .block-gallery {
-   width: auto;
+   width: 100%;
    height: auto;
    display: flex;
    flex-direction: column;
@@ -69,12 +83,12 @@
    left: 0;
 }
 
-.block-gallery img {
+/* .block-gallery img {
    width: 100%;
    height: auto;
    object-fit: cover;
    cursor: pointer;
-}
+} */
 
 .description {
    font-size: 16px;
@@ -252,6 +266,7 @@ h1 {
    color: #fff;
    border: none;
 }
+
 .btn-add-to-basket-with-size:hover {
    background-color: #059a95;
    box-shadow: 0 4px 16px rgba(6, 173, 168, 0.18);
@@ -341,4 +356,28 @@ span.yes-products {
    color: #061a1a;
    text-align: center;
    margin-bottom: 40px;
+}
+
+.block-gallery img.lazy-img:not(.loaded) {
+   color: transparent !important;
+   font-size: 0 !important;
+   opacity: 0 !important;
+}
+
+.block-gallery img.lazy-img.loaded {
+   opacity: 1 !important;
+   color: inherit !important;
+   font-size: inherit !important;
+}
+
+.block-img img.lazy-img:not(.loaded) {
+   color: transparent !important;
+   font-size: 0 !important;
+   opacity: 0 !important;
+}
+
+.block-img img.lazy-img.loaded {
+   opacity: 1 !important;
+   color: inherit !important;
+   font-size: inherit !important;
 }

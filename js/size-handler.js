@@ -1,4 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // Таймер неактивности
+  let inactivityTimeout;
+  function resetInactivityTimer() {
+    clearTimeout(inactivityTimeout);
+    inactivityTimeout = setTimeout(() => {
+      clearAllSelectedSizes();
+    }, 15 * 60 * 1000); // 15 минут
+  }
   // Функция для сохранения выбранного размера
   async function saveSelectedSize(productId, size) {
     try {
@@ -24,8 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
       } else {
         // Обработка ошибки сети
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   }
 
   // Функция для получения сохраненного размера
@@ -127,17 +134,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Обработчики для сброса размеров при завершении сессии
-  window.addEventListener("beforeunload", function () {
-    // Сбрасываем размеры при закрытии страницы/вкладки
-    clearAllSelectedSizes();
-  });
-
-  window.addEventListener("unload", function () {
-    // Дополнительный сброс при выгрузке страницы
-    clearAllSelectedSizes();
-  });
-
   // Отслеживаем активность пользователя
   [
     "mousedown",
@@ -152,4 +148,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Экспортируем функцию для внешнего использования
   window.clearAllSelectedSizes = clearAllSelectedSizes;
+});
+
+document.querySelectorAll(".size-product-item").forEach((label) => {
+  label.addEventListener("click", function () {
+    // Убираем активный класс со всех размеров
+    document.querySelectorAll(".size-product-item").forEach((item) => {
+      item.classList.remove("active");
+    });
+
+    // Добавляем активный класс к выбранному размеру
+    this.classList.add("active");
+
+    // Отмечаем соответствующий radio button
+    const radio = this.querySelector('input[type="radio"]');
+    if (radio) {
+      radio.checked = true;
+    }
+  });
 });

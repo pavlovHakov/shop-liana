@@ -42,20 +42,21 @@ $products = getFilteredProducts($mysqli, $categoryId, $name, $priceFrom, $priceT
    <link rel="stylesheet" href="style/header.css">
    <link rel="stylesheet" href="style/filter.css">
    <link rel="stylesheet" href="style/btn-scroll.css">
-
-   <title><?= htmlspecialchars($categoryName) ?> - Каталог</title>
+   <link rel="stylesheet" href="style/loader.css">
 </head>
 
 <body>
+   <script src="js/header-show-hide.js"></script>
+   <script src="js/product-lazy-loader.js"></script>
+
    <?php require_once 'templase/header.php'; ?>
    <?php require_once 'templase/filter.php'; ?>
    <div class="filter-btn">
       <img src="/img/icon/filter.svg" alt="Фильтр товаров">
    </div>
    <div class="wrapper">
-      <h1 class="category-title">Каталог женской одежды - <?= htmlspecialchars($categoryName) ?></h1>
 
-      <div class="content-category">
+      <div class="content">
 
          <?php if (count($products) > 0) : ?>
             <div class="block-info-category">

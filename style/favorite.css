@@ -6,7 +6,7 @@
 
 .container {
    max-width: 1920px;
-   margin: 0 auto;
+   margin: 23px auto 20px;
    padding: 0;
 }
 
@@ -69,17 +69,37 @@
    text-align: center;
 }
 
-.favorite-item-name {
+.block-name {
+   width: 100%;
+   height: 21px;
+   height: auto;
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-start;
+   align-items: center;
+   margin-top: 5px;
+   margin-bottom: 10px;
+   background-color: transparent;
+   color: #121313;
+   position: relative;
+}
+
+.block-name .favorite-item-name {
+   width: 100%;
    font-size: 16px;
    line-height: 21px;
    color: #121313;
-   margin-bottom: 6px;
+   margin-bottom: 0;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   display: block;
 }
 
 .favorite-item-price {
    color: #f53f4a;
    font-weight: 400;
-   margin-bottom: 14px;
+   margin-bottom: 10px;
    font-size: 16px;
    line-height: 16px;
 }
@@ -106,10 +126,11 @@
 }
 
 .btn-remove-favorite {
-   width: 28px;
+   width: 20px;
    height: auto;
    color: #f53f4a;
    cursor: pointer;
+   margin: 0 auto;
 }
 
 .btn-remove-favorite svg {

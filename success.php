@@ -29,7 +29,7 @@ $categories = getCategories($mysqli);
    <?php require_once 'templase/filter.php'; ?>
 
    <div class="wrapper-checkout">
-      <div class="container">
+      <div class="container-success">
          <div class="checkout-success">
             <strong>Спасибо за заказ!</strong><br>
             Ваш заказ успешно оформлен и принят в обработку.<br>

@@ -1,18 +1,11 @@
-<!DOCTYPE html>
-<html lang="ru">
 
-<head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Каталог товаров</title>
-   <script src="/js/size-handler.js"></script>
-</head>
-
-<body>
    <ul class="product-list">
       <?php foreach ($products as $product) : ?>
 
          <li class="product-item">
+
+            <span class="loader"></span>
+
             <div class="product-card">
                <a href="/product.php?id=<?= $product['id'] ?>" class="product-link">
 
@@ -21,7 +14,7 @@
                         <div></div>
                      </div>
                   </div>
-
+                  <span class="loader"></span>
                   <div class="container-card">
                      <?php if ($product['availability'] == 'Нет') : ?>
                         <div class="container-availability">
@@ -29,7 +22,8 @@
                         </div>
                      <?php endif; ?>
                      <div class="block-img">
-                        <img src="/img/<?= $product['img'] ?>" alt="<?= $product['name'] ?>">
+                        <span class="img-loader"></span>
+                        <img class="lazy-img" src="/img/placeholder.webp" data-src="/img/<?= htmlspecialchars($product['img']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" loading="lazy">
                      </div>
                   </div>
 
@@ -71,6 +65,4 @@
          </li>
       <?php endforeach; ?>
    </ul>
-</body>
-
-</html>
+  

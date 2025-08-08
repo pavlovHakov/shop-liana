@@ -20,10 +20,13 @@ $basketTotal = getBasketTotal($mysqli, $sessionId);
    <link rel="stylesheet" href="style/fonts/robotocondensed.css">
    <link rel="stylesheet" href="style/header.css">
    <link rel="stylesheet" href="style/btn-scroll.css">
+
    <title>Корзина</title>
+
 </head>
 
 <body>
+   <script src="js/header-show-hide.js"></script>
    <?php include 'templase/header.php'; ?>
 
    <div class="wrapper-basket">
@@ -95,183 +98,7 @@ $basketTotal = getBasketTotal($mysqli, $sessionId);
 
    <script src="js/header-favorites.js"></script>
    <script src="js/btn-scroll.js"></script>
-   <script>
-      // Функция для показа уведомлений
-      function showNotification(message, type = 'success') {
-         // Простая реализация уведомлений
-         alert(message);
-      }
-
-      // Функция для обновления итоговой суммы
-      function updateBasketTotal() {
-         let total = 0;
-         document.querySelectorAll('.basket-item').forEach(item => {
-            const price = parseFloat(item.querySelector('.basket-item-price').textContent);
-            const quantity = parseInt(item.querySelector('.quantity-input').value);
-            const itemTotal = price * quantity;
-
-            item.querySelector('.basket-item-total').textContent = itemTotal + ' ₴';
-            total += itemTotal;
-         });
-
-         document.querySelector('.total-amount').textContent = total + ' ₴';
-      }
-
-      // Обработчики для кнопок количества
-      document.querySelectorAll('.quantity-minus').forEach(button => {
-         button.addEventListener('click', function() {
-            const basketId = this.getAttribute('data-basket-id');
-            const input = document.querySelector(`.quantity-input[data-basket-id="${basketId}"]`);
-            let quantity = parseInt(input.value);
-
-            if (quantity > 1) {
-               quantity--;
-               input.value = quantity;
-               updateQuantity(basketId, quantity);
-            }
-         });
-      });
-
-      document.querySelectorAll('.quantity-plus').forEach(button => {
-         button.addEventListener('click', function() {
-            const basketId = this.getAttribute('data-basket-id');
-            const input = document.querySelector(`.quantity-input[data-basket-id="${basketId}"]`);
-            let quantity = parseInt(input.value);
-
-            quantity++;
-            input.value = quantity;
-            updateQuantity(basketId, quantity);
-         });
-      });
-
-      // Обработчик для прямого ввода количества
-      document.querySelectorAll('.quantity-input').forEach(input => {
-         input.addEventListener('change', function() {
-            const basketId = this.getAttribute('data-basket-id');
-            let quantity = parseInt(this.value);
-
-            if (quantity < 1) {
-               quantity = 1;
-               this.value = quantity;
-            }
-
-            updateQuantity(basketId, quantity);
-         });
-      });
-
-      // Функция для обновления количества товара
-      function updateQuantity(basketId, quantity) {
-         fetch('/api/basket.php', {
-               method: 'POST',
-               headers: {
-                  'Content-Type': 'application/json',
-               },
-               body: JSON.stringify({
-                  action: 'update',
-                  basketId: basketId,
-                  quantity: quantity
-               })
-            })
-            .then(response => response.json())
-            .then(data => {
-               if (data.success) {
-                  updateBasketTotal();
-
-                  // Обновляем счетчик в header
-                  if (typeof updateBasketCount === 'function') {
-                     updateBasketCount();
-                  }
-               } else {
-                  showNotification(data.message, 'error');
-               }
-            })
-            .catch(error => {
-               console.error('Ошибка:', error);
-               showNotification('Произошла ошибка при обновлении количества', 'error');
-            });
-      }
-
-      // Обработчик для удаления товара из корзины
-      document.querySelectorAll('.btn-remove-item').forEach(button => {
-         button.addEventListener('click', function() {
-            const basketId = this.getAttribute('data-basket-id');
-            const basketItem = this.closest('.basket-item');
-
-            if (confirm('Удалить товар из корзины?')) {
-               fetch('/api/basket.php', {
-                     method: 'POST',
-                     headers: {
-                        'Content-Type': 'application/json',
-                     },
-                     body: JSON.stringify({
-                        action: 'remove',
-                        basketId: basketId
-                     })
-                  })
-                  .then(response => response.json())
-                  .then(data => {
-                     if (data.success) {
-                        basketItem.remove();
-
-                        // Проверяем, остались ли еще товары
-                        const remainingItems = document.querySelectorAll('.basket-item');
-                        if (remainingItems.length === 0) {
-                           location.reload();
-                        } else {
-                           updateBasketTotal();
-                        }
-
-                        showNotification(data.message);
-
-                        // Обновляем счетчик в header
-                        if (typeof updateBasketCount === 'function') {
-                           updateBasketCount();
-                        }
-                     } else {
-                        showNotification(data.message, 'error');
-                     }
-                  })
-                  .catch(error => {
-                     console.error('Ошибка:', error);
-                     showNotification('Произошла ошибка при удалении товара', 'error');
-                  });
-            }
-         });
-      });
-
-      // Обработчик для очистки корзины
-      document.querySelector('.btn-clear-basket')?.addEventListener('click', function() {
-         if (confirm('Очистить всю корзину?')) {
-            fetch('/api/basket.php', {
-                  method: 'POST',
-                  headers: {
-                     'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify({
-                     action: 'clear'
-                  })
-               })
-               .then(response => response.json())
-               .then(data => {
-                  if (data.success) {
-                     location.reload();
-                  } else {
-                     showNotification(data.message, 'error');
-                  }
-               })
-               .catch(error => {
-                  console.error('Ошибка:', error);
-                  showNotification('Произошла ошибка при очистке корзины', 'error');
-               });
-         }
-      });
-
-      // Обработчик для оформления заказа
-      document.querySelector('.btn-checkout')?.addEventListener('click', function() {
-         // Здесь можно добавить логику оформления заказа
-         showNotification('Функция оформления заказа будет добавлена позже');
-      });
-   </script>
+   <script src="js/basket.js"></script>
 </body>
 
 </html>

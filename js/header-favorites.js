@@ -37,3 +37,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Экспортируем функцию для использования в других скриптах
 window.updateFavoritesCount = updateFavoritesCount; 
+
+
